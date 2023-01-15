@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "231113705206",
+    "project_id": "buscador-de-amigos-andro-3ae05",
+    "storage_bucket": "buscador-de-amigos-andro-3ae05.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:231113705206:android:21e364a0844cb6237e4ed7",
+        "android_client_info": {
+          "package_name": "com.example.buscador_amigos_android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "231113705206-euc0hpgna53qi87ocepg8bb2h5t9tee1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.buscador_amigos_android",
+            "certificate_hash": "44b3567f66ed9a470e22294a72b499bd6d753dae"
+          }
+        },
+        {
+          "client_id": "231113705206-ccf6ld1vg6tfiacv7kkjiedgnct5kos5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWIj1RumSUcbtPAjaJpKnipFcdS10MQ80"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "231113705206-ccf6ld1vg6tfiacv7kkjiedgnct5kos5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
