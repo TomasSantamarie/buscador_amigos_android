@@ -35,7 +35,7 @@
             android:layout_height="48dp"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
-            android:background="@drawable/borde_edittext"
+            android:background="@drawable/borde_edittext_bien"
             android:ems="10"
             android:hint="Nombre de Usuario"
             android:inputType="textPersonName"
@@ -48,18 +48,18 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="30dp"
-            android:background="@drawable/borde_edittext"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/borde_edittext_bien"
             android:ems="10"
             android:hint="Contraseña"
             android:inputType="textPassword"
             android:paddingStart="20dp" />
 
         <TextView
-            android:id="@+id/textView7"
+            android:id="@+id/error"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="30dp"
             android:layout_marginBottom="20dp"
             android:text="El usuario o la contraseña son incorrectos"
             android:textColor="@color/red" />
@@ -80,7 +80,7 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="500px"
+            android:layout_marginStart="200dp"
             android:text="o" />
 
         <Button
