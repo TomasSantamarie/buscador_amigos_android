@@ -37,7 +37,7 @@
             android:layout_marginEnd="30dp"
             android:background="@drawable/borde_edittext_bien"
             android:ems="10"
-            android:hint="Nombre de Usuario"
+            android:hint="Correo del Usuario"
             android:inputType="textPersonName"
             android:paddingStart="20dp" />
 

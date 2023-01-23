@@ -7,7 +7,10 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
 import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
+import com.google.firebase.auth.ActionCodeEmailInfo
+import com.google.firebase.auth.FirebaseAuth
 
 class RegistroUsuario : AppCompatActivity() {
 
@@ -60,21 +63,45 @@ class RegistroUsuario : AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {} })
     }
-    private fun crearNombre(): Boolean {
 
-        return true
-
-    }
-
-    private fun crearContrasena(): Boolean {
-
-        return true
-    }
     private fun acceder() {
 
+        val email = findViewById<EditText>(R.id.user2).text
+        val pss = findViewById<EditText>(R.id.contrasena1).text
+        findViewById<Button>(R.id.login2).setOnClickListener {
+            if (email.isNotEmpty() && pss.isNotEmpty()){
+
+                FirebaseAuth.getInstance().createUserWithEmailAndPassword(email.toString(), pss.toString()).addOnCompleteListener {
+                    if (it.isSuccessful){
+                        cambioPagina2(it.result?.user?.email ?:"", ProviderType.BASIC)
+                    }else {
+                        alerta()
+                    }
+                }
+            }
+        }
     }
     private fun cambioPagina() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
+    }
+    private fun alerta(){
+        val builder = AlertDialog.Builder(this)
+
+        builder.setTitle("Error")
+        builder.setMessage("Se ha producido un error autentificando al usuario")
+        builder.setPositiveButton("Aceptar", null)
+
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
+
+    private fun cambioPagina2(email:String, provider : ProviderType){
+
+        val registroIntent : Intent = Intent(this, MainActivity::class.java).apply {
+            putExtra("email", email)
+            putExtra("provider", provider.name)
+        }
+        startActivity(registroIntent)
     }
 }

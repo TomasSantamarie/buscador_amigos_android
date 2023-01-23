@@ -37,7 +37,7 @@
             android:layout_marginEnd="30dp"
             android:background="@drawable/borde_edittext_bien"
             android:ems="10"
-            android:hint="Nombre de Usuario"
+            android:hint="Correo del Usuario"
             android:inputType="textPersonName"
             android:paddingStart="20dp" />
 
@@ -64,7 +64,7 @@
             android:layout_marginBottom="30dp"
             android:background="@drawable/borde_edittext_bien"
             android:ems="10"
-            android:hint="Contraseña"
+            android:hint="Verificar Contraseña"
             android:inputType="textPassword"
             android:paddingStart="20dp" />
 
@@ -106,7 +106,7 @@
             android:layout_marginEnd="100dp"
             android:background="@drawable/botones"
             android:backgroundTint="@null"
-            android:text="Acceder "
+            android:text="Registrar"
             android:textColor="@color/white" />
 
         <TextView

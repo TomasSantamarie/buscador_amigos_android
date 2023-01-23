@@ -7,6 +7,11 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.core.view.isVisible
 
+
+
+enum class ProviderType {
+    BASIC
+}
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +27,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkNombre(): Boolean {
 
-        return true
+
+            return true
+
+
 
     }
 
@@ -31,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         return true
     }
     private fun acceder() {
+
 
     }
     private fun cambioPagina() {
