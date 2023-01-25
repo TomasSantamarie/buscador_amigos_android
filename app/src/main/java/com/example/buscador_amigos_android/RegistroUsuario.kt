@@ -9,7 +9,6 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
-import com.google.firebase.auth.ActionCodeEmailInfo
 import com.google.firebase.auth.FirebaseAuth
 
 class RegistroUsuario : AppCompatActivity() {
@@ -71,11 +70,15 @@ class RegistroUsuario : AppCompatActivity() {
         findViewById<Button>(R.id.login2).setOnClickListener {
             if (email.isNotEmpty() && pss.isNotEmpty()){
 
-                FirebaseAuth.getInstance().createUserWithEmailAndPassword(email.toString(), pss.toString()).addOnCompleteListener {
+                FirebaseAuth.getInstance()
+                    .createUserWithEmailAndPassword(email.toString(),
+                        pss.toString()).addOnCompleteListener {
+
                     if (it.isSuccessful){
-                        cambioPagina2(it.result?.user?.email ?:"", ProviderType.BASIC)
+                        cambioPagina2(it.result?.user?.email ?:"", pss.toString())
                     }else {
                         alerta()
+                        findViewById<EditText>(R.id.usuarioNoValido).isVisible = true
                     }
                 }
             }
@@ -96,11 +99,11 @@ class RegistroUsuario : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun cambioPagina2(email:String, provider : ProviderType){
+    private fun cambioPagina2(email:String, pss: String){
 
-        val registroIntent : Intent = Intent(this, MainActivity::class.java).apply {
+        val registroIntent = Intent(this, MainActivity::class.java).apply {
             putExtra("email", email)
-            putExtra("provider", provider.name)
+            putExtra("contraseña", pss)
         }
         startActivity(registroIntent)
     }
