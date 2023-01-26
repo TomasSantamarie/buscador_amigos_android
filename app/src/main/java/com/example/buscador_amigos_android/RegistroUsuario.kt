@@ -9,53 +9,62 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
+import com.example.buscador_amigos_android.databinding.ActivityMainBinding
+import com.example.buscador_amigos_android.databinding.ActivityRegistroUsuarioBinding
 import com.google.firebase.auth.FirebaseAuth
 
 class RegistroUsuario : AppCompatActivity() {
 
+    private lateinit var binding: ActivityRegistroUsuarioBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_registro_usuario)
-        findViewById<EditText>(R.id.usuarioNoValido).isVisible = false
-        findViewById<EditText>(R.id.minCaracteres).isVisible = false
-        findViewById<EditText>(R.id.noCoinciden).isVisible = false
+        binding = ActivityRegistroUsuarioBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+        binding.usuarioNoValido.isVisible = false
+        binding.minCaracteres.isVisible = false
+        binding.noCoinciden.isVisible = false
+        binding.login2.isEnabled = false
 
-        findViewById<Button>(R.id.login2).setOnClickListener { acceder() }
+        binding.login2.setOnClickListener { acceder() }
 
-        findViewById<Button>(R.id.crearCuenta2).setOnClickListener { cambioPagina() }
+        binding.crearCuenta2.setOnClickListener { cambioPagina() }
 
-        findViewById<EditText>(R.id.contrasena1).addTextChangedListener( object : TextWatcher {
+        binding.contrasena1.addTextChangedListener( object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                if (findViewById<EditText>(R.id.contrasena1).text.toString().length > 8) {
-                    findViewById<EditText>(R.id.minCaracteres).isVisible = true
+                if (binding.contrasena1.text.toString().length > 8) {
+                    binding.minCaracteres.isVisible = true
                 }
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {} })
 
-        findViewById<EditText>(R.id.contrasena1).addTextChangedListener( object : TextWatcher {
+        binding.contrasena1.addTextChangedListener( object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                if (findViewById<EditText>(R.id.contrasena1).text.toString().length < 8) {
-                    findViewById<EditText>(R.id.minCaracteres).isVisible = true
-                    findViewById<EditText>(R.id.contrasena1).setBackgroundResource(R.drawable.borde_edittext_mal)
+                if (binding.contrasena1.text.toString().length < 8) {
+                    binding.minCaracteres.isVisible = true
+                    binding.contrasena1.setBackgroundResource(R.drawable.borde_edittext_mal)
                 } else {
-                    findViewById<EditText>(R.id.contrasena1).setBackgroundResource(R.drawable.borde_edittext_bien)
-                    findViewById<EditText>(R.id.minCaracteres).isVisible = false
+                    binding.contrasena1.setBackgroundResource(R.drawable.borde_edittext_bien)
+                    binding.minCaracteres.isVisible = false
                 }
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {} })
 
-        findViewById<EditText>(R.id.contrasena2).addTextChangedListener( object : TextWatcher {
+        binding.contrasena2.addTextChangedListener( object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                if (!findViewById<EditText>(R.id.contrasena1).text.toString().equals(findViewById<EditText>(R.id.contrasena2).text.toString())) {
-                    findViewById<EditText>(R.id.noCoinciden).isVisible = true
-                    findViewById<EditText>(R.id.contrasena2).setBackgroundResource(R.drawable.borde_edittext_mal)
+                if (!binding.contrasena1.text.toString().equals(findViewById<EditText>(R.id.contrasena2).text.toString())) {
+                    binding.noCoinciden.isVisible = true
+                    binding.login2.isEnabled = false
+                    binding.contrasena2.setBackgroundResource(R.drawable.borde_edittext_mal)
                 } else {
-                    findViewById<EditText>(R.id.contrasena2).setBackgroundResource(R.drawable.borde_edittext_bien)
-                    findViewById<EditText>(R.id.noCoinciden).isVisible = false
+                    binding.contrasena2.setBackgroundResource(R.drawable.borde_edittext_bien)
+                    binding.noCoinciden.isVisible = false
+                    binding.login2.isEnabled = true
                 }
             }
 
@@ -65,9 +74,9 @@ class RegistroUsuario : AppCompatActivity() {
 
     private fun acceder() {
 
-        val email = findViewById<EditText>(R.id.user2).text
-        val pss = findViewById<EditText>(R.id.contrasena1).text
-        findViewById<Button>(R.id.login2).setOnClickListener {
+        val email = binding.user2.text
+        val pss = binding.contrasena1.text
+        binding.login2.setOnClickListener {
             if (email.isNotEmpty() && pss.isNotEmpty()){
 
                 FirebaseAuth.getInstance()
@@ -78,7 +87,7 @@ class RegistroUsuario : AppCompatActivity() {
                         cambioPagina2(it.result?.user?.email ?:"", pss.toString())
                     }else {
                         alerta()
-                        findViewById<EditText>(R.id.usuarioNoValido).isVisible = true
+                        binding.usuarioNoValido.isVisible = true
                     }
                 }
             }

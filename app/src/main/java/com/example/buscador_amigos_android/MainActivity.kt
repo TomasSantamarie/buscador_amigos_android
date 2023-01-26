@@ -3,35 +3,57 @@ package com.example.buscador_amigos_android
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Button
 import android.widget.EditText
 import androidx.core.view.isVisible
+import com.example.buscador_amigos_android.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        findViewById<EditText>(R.id.error).isVisible = false
-        findViewById<Button>(R.id.login).setOnClickListener { acceder() }
-        findViewById<Button>(R.id.crearCuenta).setOnClickListener { cambioPagina() }
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+        binding.error.isVisible = false
+        binding.login.setOnClickListener { acceder() }
+        binding.crearCuenta.setOnClickListener { cambioPagina() }
 
         var bundle = intent.extras
         val pss = bundle?.getString("contraseña")
         val email = bundle?.getString("email")
 
 
-        findViewById<EditText>(R.id.user).setText(email)
-        findViewById<EditText>(R.id.textPassword).setText(pss)
+        binding.user.setText(email)
+        binding.textPassword.setText(pss)
 
+        binding.textPassword.addTextChangedListener( object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                binding.user.setBackgroundResource(R.drawable.borde_edittext_bien)
+                binding.textPassword.setBackgroundResource(R.drawable.borde_edittext_bien)}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {} })
+
+
+        binding.user.addTextChangedListener( object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                binding.user.setBackgroundResource(R.drawable.borde_edittext_bien)
+                binding.textPassword.setBackgroundResource(R.drawable.borde_edittext_bien)}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {} })
     }
 
     private fun acceder() {
 
-        val email = findViewById<EditText>(R.id.user).text
-        val pss = findViewById<EditText>(R.id.textPassword).text
-        findViewById<Button>(R.id.login).setOnClickListener{
+        val email = binding.user.text
+        val pss = binding.textPassword.text
+        binding.login.setOnClickListener{
             if (email.isNotEmpty() && pss.isNotEmpty()){
 
                 FirebaseAuth.getInstance()
@@ -40,7 +62,9 @@ class MainActivity : AppCompatActivity() {
                     if (it.isSuccessful){
                         cambioPagina2()
                     }else {
-                        findViewById<EditText>(R.id.error).isVisible = true
+                        binding.error.isVisible = true
+                        binding.user.setBackgroundResource(R.drawable.borde_edittext_mal)
+                        binding.textPassword.setBackgroundResource(R.drawable.borde_edittext_mal)
                     }
                 }
             }
