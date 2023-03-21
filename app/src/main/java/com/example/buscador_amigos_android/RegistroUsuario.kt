@@ -1,5 +1,6 @@
 package com.example.buscador_amigos_android
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,11 +13,12 @@ import androidx.core.view.isVisible
 import com.example.buscador_amigos_android.databinding.ActivityMainBinding
 import com.example.buscador_amigos_android.databinding.ActivityRegistroUsuarioBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class RegistroUsuario : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegistroUsuarioBinding
-
+    private val db = FirebaseFirestore.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegistroUsuarioBinding.inflate(layoutInflater)
@@ -72,18 +74,21 @@ class RegistroUsuario : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {} })
     }
 
+    @SuppressLint("SuspiciousIndentation")
     private fun acceder() {
 
         val email = binding.user2.text
         val pss = binding.contrasena1.text
-        binding.login2.setOnClickListener {
+
             if (email.isNotEmpty() && pss.isNotEmpty()){
 
                 FirebaseAuth.getInstance()
                     .createUserWithEmailAndPassword(email.toString(),
                         pss.toString()).addOnCompleteListener {
-
                     if (it.isSuccessful){
+                        var usuario = Usuario(email.toString())
+                        usuario.setNombre(email.toString())
+                        db.collection("Usuarios").document(usuario.getCorreo()).set(usuario)
                         cambioPagina2(it.result?.user?.email ?:"", pss.toString())
                     }else {
                         alerta()
@@ -91,7 +96,7 @@ class RegistroUsuario : AppCompatActivity() {
                     }
                 }
             }
-        }
+
     }
     private fun cambioPagina() {
         val intent = Intent(this, MainActivity::class.java)
