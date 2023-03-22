@@ -23,7 +23,7 @@ class Aplicacion : AppCompatActivity() {
         }
 
         if (email != null) {
-            db.collection("Usuarios").document(email)
+            db.collection("Usuarios").document(email.toString())
                 .get()
 
                   .addOnSuccessListener {
@@ -32,8 +32,9 @@ class Aplicacion : AppCompatActivity() {
 
                         if (usuario != null) {
 
-                            binding.nombre.text = usuario.getNombre()
-                            binding.contador.setText(usuario.getAmigos().size)
+                            binding.nombre.setText(usuario.getNombre())
+                            binding.contador.setText(usuario.getAmigos().size.toString())
+
 
 
                         }
