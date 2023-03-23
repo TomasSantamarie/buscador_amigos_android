@@ -18,8 +18,8 @@ class Cuenta : AppCompatActivity() {
         binding = ActivityCuentaBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        binding.alertaNombre.isGone = false
-        binding.alertaCodigo.isGone = false
+        binding.alertaNombre.isGone = true
+        binding.alertaCodigo.isGone = true
         val bundle = intent.extras
         val nombre = bundle?.getString("nombre")
         val codigo = bundle?.getString("codigo")
@@ -38,7 +38,7 @@ class Cuenta : AppCompatActivity() {
 
         binding.nombre.addTextChangedListener( object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                binding.alertaNombre.isGone = binding.nombre.text.toString().length >= 8
+                binding.alertaNombre.isGone = binding.nombre.text.toString().length >= 4
 
             }
 
@@ -55,30 +55,36 @@ class Cuenta : AppCompatActivity() {
 
         binding.guardar.setOnClickListener {
 
-            db.collection("Usuarios").document(email.toString())
-                .get()
+            if ( (binding.codigo.text.toString().length >= 8) and (binding.nombre.text.toString().length >= 4)) {
+                db.collection("Usuarios").document(email.toString())
+                    .get()
+                    .addOnSuccessListener {
+                        if (it != null) {
+                            val usuario = it.toObject(Usuario::class.java)
 
-                .addOnSuccessListener {
-                    if (it != null) {
-                        val usuario = it.toObject(Usuario::class.java)
+                            usuario?.setNombre(binding.nombre.text.toString())
+                            usuario?.setCodigo(binding.codigo.text.toString())
+                            if (usuario != null && email != null) {
+                                db.collection("Usuarios").document(email).set(usuario)
+                                val text = "Cambios guardados!"
+                                val duration = Toast.LENGTH_SHORT
+                                val toast = Toast.makeText(applicationContext, text, duration)
+                                toast.show()
+                            } else {
+                                val text = "Los cambios no se pudieron guardar"
+                                val duration = Toast.LENGTH_SHORT
+                                val toast = Toast.makeText(applicationContext, text, duration)
+                                toast.show()
+                            }
 
-                        usuario?.setNombre(binding.nombre.text.toString())
-                        usuario?.setCodigo(binding.codigo.text.toString())
-                        if (usuario != null && email != null) {
-                            db.collection("Usuarios").document(email).set(usuario)
-                            val text = "Cambios guardados!"
-                            val duration = Toast.LENGTH_SHORT
-                            val toast = Toast.makeText(applicationContext, text, duration)
-                            toast.show()
-                        }else{
-                            val text = "Los cambios no se pudieron guardar"
-                            val duration = Toast.LENGTH_SHORT
-                            val toast = Toast.makeText(applicationContext, text, duration)
-                            toast.show()
                         }
-
                     }
-                }
+            } else{
+                val text = "Faltan requisitos"
+                val duration = Toast.LENGTH_SHORT
+                val toast = Toast.makeText(applicationContext, text, duration)
+                toast.show()
+            }
 
         }
 
