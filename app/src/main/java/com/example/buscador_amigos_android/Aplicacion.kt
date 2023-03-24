@@ -43,6 +43,16 @@ class Aplicacion : AppCompatActivity() {
                                 startActivity(intent)
                             }
 
+
+                            binding.amigos.setOnClickListener {
+                                val intent = Intent(this, Amigos::class.java).apply {
+                                    putExtra("email",usuario.getCorreo())
+                                    putExtra("nombre",usuario.getNombre())
+                                    putExtra("ubicacion",usuario.getUbicacion())
+                                }
+                                startActivity(intent)
+                            }
+
                         }
 
                     }

@@ -45,7 +45,7 @@ class Cuenta : AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {} })
 
-        binding.nombre.addTextChangedListener( object : TextWatcher {
+        binding.codigo.addTextChangedListener( object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 binding.alertaCodigo.isGone = binding.codigo.text.toString().length >= 8
             }
