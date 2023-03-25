@@ -23,17 +23,17 @@
                 android:id="@+id/imageView"
                 android:layout_width="128dp"
                 android:layout_height="97dp"
-                android:layout_marginStart="100dp"
+                android:layout_marginStart="110dp"
                 android:layout_marginTop="20dp"
-                app:srcCompat="@drawable/amigo" />
+                app:srcCompat="@drawable/elegir" />
 
             <TextView
-                android:id="@+id/textView11"
+                android:id="@+id/titulo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="70dp"
                 android:layout_marginTop="20dp"
-                android:text="Añadir Amigo"
+                android:text="Elegir opción"
                 android:textColor="@color/black"
                 android:textSize="34sp" />
 
@@ -46,13 +46,14 @@
                 android:text="." />
 
             <LinearLayout
+                android:id="@+id/camposAnadir"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="30dp"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textView14"
+                    android:id="@+id/tituloCorreo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Correo Electrónico"
@@ -63,26 +64,32 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="textPersonName"
-                    android:textCursorDrawable="@drawable/botones" />
-
-                <TextView
-                    android:id="@+id/textView16"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="Código"
-                    android:textSize="20sp" />
-
-                <EditText
-                    android:id="@+id/codigo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
                     android:inputType="textPersonName" />
 
+                <LinearLayout
+                    android:id="@+id/parteCodigo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView16"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="Código"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/codigo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="textPersonName" />
+                </LinearLayout>
+
                 <TextView
-                    android:id="@+id/textView17"
+                    android:id="@+id/texto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="La persona que añadas como amigo, podrá saber la ubicación que tengas guardada."
@@ -104,7 +111,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/botones"
                     android:backgroundTint="@null"
-                    android:text="Volver"
+                    android:text="Eliminar"
                     android:textColor="@color/white" />
 
                 <Button
@@ -115,7 +122,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/botones"
                     android:backgroundTint="@null"
-                    android:text="añadir"
+                    android:text="AGREGAR"
                     android:textColor="@color/white" />
             </LinearLayout>
 

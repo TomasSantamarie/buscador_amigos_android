@@ -41,10 +41,16 @@ class Usuario(private var correo:String): Serializable{
     fun setAmigos(amigos: ArrayList<Amigo>){
         this.amigos = amigos
     }
-    fun addAmigo(amigo: Amigo){
-        amigos.add(amigo)
-    }
 
+
+    fun encontrarAmigo(nombre: String):String{
+        for((indice, item) in amigos.withIndex()){
+            if (item.getNombre() == nombre) {
+                return item.getCorreo()
+            }
+        }
+        return "error"
+    }
     fun delAmigo(nombre: String): Boolean {
         for((indice, item) in amigos.withIndex()){
             if (item.getNombre() == nombre) {
@@ -61,6 +67,7 @@ class Usuario(private var correo:String): Serializable{
 }
 
 class Amigo(private var nombre:String, private var ubicacion:String):Serializable{
+    private var correo = ""
     constructor() : this("", "")
     fun getNombre(): String{
         return nombre
@@ -68,10 +75,17 @@ class Amigo(private var nombre:String, private var ubicacion:String):Serializabl
     fun getUbicacion(): String{
         return ubicacion
     }
+    fun getCorreo(): String{
+        return correo
+    }
     fun setNombre(nombre: String){
         this.nombre = nombre
     }
     fun setUbicacion(ubicacion: String){
         this.ubicacion = ubicacion
     }
+    fun setCorreo(correo: String){
+        this.correo = correo
+    }
+
 }
