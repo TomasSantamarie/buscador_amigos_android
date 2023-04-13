@@ -26,10 +26,11 @@ class Cuenta : AppCompatActivity() {
         val email = bundle?.getString("email")
         val ubicacion =bundle?.getString("ubicacion")
 
-        if (nombre != null || codigo != null || email !=null){
+        if (nombre != null || codigo != null || email !=null || ubicacion != null){
             binding.nombre.setText(nombre)
             binding.correo.setText(email)
             binding.codigo.setText(codigo)
+            binding.ubicacion.setText(ubicacion)
         }
 
         if (ubicacion != null)
