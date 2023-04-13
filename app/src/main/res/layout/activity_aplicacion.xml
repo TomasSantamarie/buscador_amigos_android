@@ -67,7 +67,7 @@
                     android:textColor="@color/white" />
 
                 <Button
-                    android:id="@+id/login5"
+                    android:id="@+id/ubicacion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/botones"

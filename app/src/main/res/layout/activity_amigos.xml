@@ -92,7 +92,7 @@
                     android:id="@+id/texto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="La persona que añadas como amigo, podrá saber la ubicación que tengas guardada."
+                    android:text="Al agregar a un usuario a tu lista de amigos éste tendrá acceso a la información de tu ubicación que hayas guardado."
                     android:textColor="@color/teal_700" />
 
             </LinearLayout>
