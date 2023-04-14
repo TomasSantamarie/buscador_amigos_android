@@ -53,7 +53,6 @@ class Ubicacion : AppCompatActivity() {
                     override fun isCancellationRequested() = false
                 })
                     .addOnSuccessListener(this) { location ->
-
                         if (location != null) {
 
                             // Obtiene la ciudad a partir de la ubicación actual
@@ -68,6 +67,7 @@ class Ubicacion : AppCompatActivity() {
                                 Log.v("Ciudad",city)
                             } else {
                                 Log.v("Ciudad","No esta")
+
                             }
                             db.collection("Usuarios").document(email.toString())
                                 .get()
@@ -95,6 +95,7 @@ class Ubicacion : AppCompatActivity() {
                         Log.d(".EXE", it.message!!)
                     }.addOnCanceledListener {
                         Log.d("Loc", "Cancelado")
+
                     }
             }
         }
