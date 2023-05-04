@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.core.view.isGone
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.buscador_amigos_android.databinding.ActivityAmigosBinding
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -24,6 +26,9 @@ class Amigos : AppCompatActivity() {
         val emailUsuario = bundle?.getString("email")
         val nombreUsuario = bundle?.getString("nombre")
         val ubicacionUsuario = bundle?.getString("ubicacion")
+
+        binding.listaAmigos.layoutManager = LinearLayoutManager(this)
+        refrescar(emailUsuario)
 
         binding.anadir.setOnClickListener {
 
@@ -67,6 +72,26 @@ class Amigos : AppCompatActivity() {
         }
     }
 
+    private fun refrescar(emailUsuario: String?) {
+        db.collection("Usuarios").document(emailUsuario.toString())
+            .get()
+            .addOnSuccessListener {
+                if (it != null) {
+                    val usuario = it.toObject(Usuario::class.java)
+
+                    if (usuario != null) {
+
+                        binding.listaAmigos.adapter = AmigosAdapter(usuario.getAmigos())
+                        val divider = DividerItemDecoration(binding.listaAmigos.context, DividerItemDecoration.VERTICAL)
+                        binding.listaAmigos.addItemDecoration(divider)
+
+                    }
+                }
+            }
+    }
+
+
+
     private fun eliminarAmigo(emailUsuario: String?) {
         var nombreAmigo = binding.correo.text.toString()
 
@@ -99,6 +124,7 @@ class Amigos : AppCompatActivity() {
                                     Log.v("emailAmigo",emailAmigo)
                                     if (emailAmigo != "error") {
                                         deleteAmigo(emailAmigo,usuario.getNombre())
+                                        refrescar(emailUsuario)
                                     }else {
                                         val text = "Algo falla"
                                         val duration = Toast.LENGTH_SHORT
@@ -132,6 +158,7 @@ class Amigos : AppCompatActivity() {
 
                 }
         }
+
 
 
     }
@@ -244,10 +271,11 @@ class Amigos : AppCompatActivity() {
 
             }
 
+
     }
 
-    private fun anadirAmigo(email: String, amigo: Amigo) {
-        db.collection("Usuarios").document(email)
+    private fun anadirAmigo(emailUsuario: String, amigo: Amigo) {
+        db.collection("Usuarios").document(emailUsuario)
             .get()
             .addOnSuccessListener {
                 if (it != null) {
@@ -256,6 +284,7 @@ class Amigos : AppCompatActivity() {
                     if (usuario != null){
                         usuario.getAmigos().add(amigo)
                         db.collection("Usuarios").document(usuario.getCorreo()).set(usuario)
+                        refrescar(emailUsuario)
 
                         Log.v("usuario", usuario.getAmigos().toString())
                     }

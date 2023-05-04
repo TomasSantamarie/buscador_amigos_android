@@ -8,8 +8,11 @@ import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.buscador_amigos_android.databinding.ActivityUbicacionBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
@@ -33,6 +36,24 @@ class Ubicacion : AppCompatActivity() {
         val bundle = intent.extras
         val email = bundle?.getString("email")
         localizacionUsuario = LocationServices.getFusedLocationProviderClient(this)
+
+        binding.listaAmigos.layoutManager = LinearLayoutManager(this)
+
+        db.collection("Usuarios").document(email.toString())
+            .get()
+            .addOnSuccessListener {
+                if (it != null) {
+                    val usuario = it.toObject(Usuario::class.java)
+
+                    if (usuario != null) {
+
+                        binding.listaAmigos.adapter = AmigosAdapter(usuario.getAmigos())
+                        val divider = DividerItemDecoration(binding.listaAmigos.context, DividerItemDecoration.VERTICAL)
+                        binding.listaAmigos.addItemDecoration(divider)
+
+                    }
+                }
+            }
         binding.volver.setOnClickListener {
             val intent = Intent(this, Aplicacion::class.java).apply {
                 putExtra("email", email)
@@ -80,7 +101,7 @@ class Ubicacion : AppCompatActivity() {
                                                 usuario.setUbicacion(city)
                                                 if (email != null) {
                                                     db.collection("Usuarios").document(email).set(usuario)
-                                                    val text = "Ubicación guardada!"
+                                                    val text = "Ubicación: $city guardada!"
                                                     val duration = Toast.LENGTH_SHORT
                                                     val toast = Toast.makeText(applicationContext, text, duration)
                                                     toast.show()

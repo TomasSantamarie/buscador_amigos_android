@@ -7,6 +7,11 @@
     android:background="@drawable/fondo"
     tools:context=".Amigos">
 
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -44,6 +49,35 @@
                 android:layout_marginStart="40dp"
                 android:background="@drawable/botones"
                 android:text="." />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/volver"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/botones"
+                    android:backgroundTint="@null"
+                    android:text="Eliminar"
+                    android:textColor="@color/white" />
+
+                <Button
+                    android:id="@+id/anadir"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/botones"
+                    android:backgroundTint="@null"
+                    android:text="AGREGAR"
+                    android:textColor="@color/white" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/camposAnadir"
@@ -99,33 +133,17 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="20dp"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/volver"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/listaAmigos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/botones"
-                    android:backgroundTint="@null"
-                    android:text="Eliminar"
-                    android:textColor="@color/white" />
-
-                <Button
-                    android:id="@+id/anadir"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/botones"
-                    android:backgroundTint="@null"
-                    android:text="AGREGAR"
-                    android:textColor="@color/white" />
+                    tools:listitem="@layout/objeto_lista" />
             </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

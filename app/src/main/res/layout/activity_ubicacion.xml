@@ -61,9 +61,16 @@
                     android:text="Guardar"
                     android:textColor="@color/white" />
 
-                <androidx.recyclerview.widget.RecyclerView
+                <ScrollView
+                    android:id="@+id/scrollView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/listaAmigos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:listitem="@layout/objeto_lista" />
+                </ScrollView>
             </LinearLayout>
 
         </LinearLayout>
