@@ -29,6 +29,8 @@ class Amigos : AppCompatActivity() {
 
         binding.listaAmigos.layoutManager = LinearLayoutManager(this)
         refrescar(emailUsuario)
+        binding.listaAmigos.isClickable = false
+        binding.listaAmigos.isEnabled = false
 
         binding.anadir.setOnClickListener {
 
@@ -39,15 +41,31 @@ class Amigos : AppCompatActivity() {
                 binding.volver.text="VOLVER"
                 binding.texto.text="La persona que añadas como amigo, podrá saber la ubicación que tengas guardada."
                 binding.camposAnadir.isGone = false
+                binding.editar.isGone = true
             }
-            if (binding.correo.text.toString().length >= 4) {
+            if (binding.correo.text.toString().isNotEmpty()) {
                 if (binding.anadir.text.toString().equals("AÑADIR"))
                     buscarAmigo(emailUsuario, nombreUsuario, ubicacionUsuario)
                 else {
                     if (binding.anadir.text.toString().equals("ELIMINAR"))
                         eliminarAmigo(emailUsuario)
+                    else{
+                        if (binding.anadir.text.toString().equals("ACTUALIZAR"))
+                            editarAmigo(emailUsuario, binding.codigo.text.toString(),binding.correo.text.toString())
+                    }
                 }
             }
+
+        }
+        binding.editar.setOnClickListener {
+            binding.titulo.text="Editar Nombre"
+            binding.anadir.text="ACTUALIZAR"
+            binding.tituloCorreo.text="Nombre del amigo"
+            binding.volver.text="VOLVER"
+            binding.texto.text="Para cambiar el nombre del amigo que quieras, necesitaremos su nombre y el nuevo que quieras ponerle"
+            binding.tituloCodigo.text="Nuevo Nombre"
+            binding.camposAnadir.isGone = false
+            binding.editar.isGone = true
 
         }
         binding.volver.setOnClickListener {
@@ -72,6 +90,8 @@ class Amigos : AppCompatActivity() {
         }
     }
 
+
+
     private fun refrescar(emailUsuario: String?) {
         db.collection("Usuarios").document(emailUsuario.toString())
             .get()
@@ -90,7 +110,26 @@ class Amigos : AppCompatActivity() {
             }
     }
 
+    private fun editarAmigo(emailUsuario: String?, nombreNuevo: String, amigo: String) {
+        db.collection("Usuarios").document(emailUsuario.toString())
+            .get()
+            .addOnSuccessListener {
+                if (it != null) {
+                    val usuario = it.toObject(Usuario::class.java)
 
+                    if (usuario != null) {
+                        usuario.getAmigos()[usuario.posicionAmigo(amigo)].setNombre(nombreNuevo)
+                        db.collection("Usuarios").document(usuario.getCorreo()).set(usuario)
+                        val text = "Hemos cambiado el nombre de $amigo a $nombreNuevo"
+                        val duration = Toast.LENGTH_SHORT
+                        val toast =
+                            Toast.makeText(applicationContext, text, duration)
+                        toast.show()
+                        refrescar(emailUsuario)
+                    }
+                }
+            }
+    }
 
     private fun eliminarAmigo(emailUsuario: String?) {
         var nombreAmigo = binding.correo.text.toString()

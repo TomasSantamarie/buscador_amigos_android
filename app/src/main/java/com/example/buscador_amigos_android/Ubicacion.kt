@@ -8,7 +8,6 @@ import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -105,6 +104,7 @@ class Ubicacion : AppCompatActivity() {
                                                     val duration = Toast.LENGTH_SHORT
                                                     val toast = Toast.makeText(applicationContext, text, duration)
                                                     toast.show()
+                                                    reescribir(usuario.getAmigos(),city,usuario.getNombre())
                                                 }
 
                                             }
@@ -122,5 +122,27 @@ class Ubicacion : AppCompatActivity() {
         }
 
 
+    }
+
+    private fun reescribir(amigos: ArrayList<Amigo>, city: String, nombre: String) {
+
+        var cant = amigos.size
+        for (i in 1..cant){
+            db.collection("Usuarios").document(amigos[i-1].getCorreo())
+                .get()
+                .addOnSuccessListener {
+                    if (it != null) {
+                        val usuario = it.toObject(Usuario::class.java)
+                        if (usuario != null) {
+                            var aux = usuario.posicionAmigo(nombre)
+                            if (aux > 0) {
+                                usuario.getAmigos()[aux].setUbicacion(city)
+                                db.collection("Usuarios").document(amigos[i-1].getCorreo()).set(usuario)
+                            }else
+                                Log.v("No encontrado","En la lista de amigos de ${usuario.getNombre()} no se ha encontrado a $nombre")
+                        }
+                    }
+                }
+        }
     }
 }

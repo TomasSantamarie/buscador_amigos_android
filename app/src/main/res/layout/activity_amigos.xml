@@ -77,6 +77,7 @@
                     android:backgroundTint="@null"
                     android:text="AGREGAR"
                     android:textColor="@color/white" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -107,7 +108,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView16"
+                        android:id="@+id/tituloCodigo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
@@ -134,14 +135,34 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:clickable="false"
                 android:orientation="vertical">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/listaAmigos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
                     tools:listitem="@layout/objeto_lista" />
+
             </LinearLayout>
+
+            <Button
+                android:id="@+id/editar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="90dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="90dp"
+                android:layout_marginBottom="30dp"
+                android:layout_weight="1"
+                android:background="@drawable/botones"
+                android:backgroundTint="@null"
+                android:text="Editar"
+                android:textColor="@color/white" />
 
         </LinearLayout>
     </LinearLayout>

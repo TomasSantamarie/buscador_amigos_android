@@ -51,6 +51,16 @@ class Usuario(private var correo:String): Serializable{
         }
         return "error"
     }
+
+    fun posicionAmigo(nombre: String): Int {
+        for((indice, item) in amigos.withIndex()){
+            if (item.getNombre() == nombre) {
+                return indice
+            }
+        }
+        return 0
+    }
+
     fun delAmigo(nombre: String): Boolean {
         for((indice, item) in amigos.withIndex()){
             if (item.getNombre() == nombre) {
