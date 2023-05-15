@@ -133,8 +133,25 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/accionAdministrar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="30dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tituloCorreo2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Selecciona a un amigo"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
                 android:layout_marginBottom="10dp"
                 android:clickable="false"
                 android:orientation="vertical">
@@ -147,6 +164,51 @@
                     android:focusable="false"
                     android:focusableInTouchMode="false"
                     tools:listitem="@layout/objeto_lista" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/camposAdministrar2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="30dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tituloCorreo3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Amigo seleccionado:"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/selecAmigo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Ninguno" />
+
+                <LinearLayout
+                    android:id="@+id/actualizar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tituloCodigo2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="Nuevo Nombre"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/nuevo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="textPersonName" />
+                </LinearLayout>
 
             </LinearLayout>
 

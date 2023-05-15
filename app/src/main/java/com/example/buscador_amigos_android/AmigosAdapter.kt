@@ -6,10 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import org.w3c.dom.Text
+import com.google.firebase.firestore.FirebaseFirestore
+
+interface OnAmigoClickListener {
+    fun onAmigoClick(amigo: Amigo)
+}
+
+class AmigosAdapter(var amigos: ArrayList<Amigo>, private val listener: OnAmigoClickListener) : RecyclerView.Adapter<AmigosAdapter.ViewHolder>() {
 
 
-class AmigosAdapter(var amigos: ArrayList<Amigo>) : RecyclerView.Adapter<AmigosAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -25,23 +30,39 @@ class AmigosAdapter(var amigos: ArrayList<Amigo>) : RecyclerView.Adapter<AmigosA
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val amigo = amigos[position]
-        holder.agregar(amigo)
+        holder.agregar(amigo, listener)
         Log.d("ADD", amigo.getCorreo())
+
+
     }
+
 
     override fun getItemCount(): Int = amigos.size
 
 
 
     class ViewHolder(val view: View): RecyclerView.ViewHolder(view) {
-
+        private val db = FirebaseFirestore.getInstance()
         private val nombre =  view.findViewById<TextView>(R.id.nombre_ListaAmigo)
         private val lugar =  view.findViewById<TextView>(R.id.ubicacion_ListaAmigo)
-        fun agregar(amigo: Amigo) {
+        private val email = view.findViewById<TextView>(R.id.correo_ListaAmigo)
+        fun agregar(amigo: Amigo, listener: OnAmigoClickListener) {
             nombre.text = amigo.getNombre()
-            lugar.text = amigo.getUbicacion()
+            email.text = amigo.getCorreo()
+            db.collection("Usuarios").document(amigo.getCorreo())
+                .get()
+                .addOnSuccessListener {
+                    if (it != null) {
+                        val usuario = it.toObject(Usuario::class.java)
+
+                        if (usuario != null) {
+                            lugar.text = usuario.getUbicacion()
+                        }
+                    }
+                }
 
             view.setOnClickListener {
+               listener.onAmigoClick(amigo)
                 Log.d("CLICK", amigo.getCorreo())
             }
         }

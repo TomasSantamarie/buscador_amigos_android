@@ -51,19 +51,18 @@ class Usuario(private var correo:String): Serializable{
         }
         return "error"
     }
-
-    fun posicionAmigo(nombre: String): Int {
+    fun encontrarAmigoCorreo(correo: String): Int {
         for((indice, item) in amigos.withIndex()){
-            if (item.getNombre() == nombre) {
+            if (item.getCorreo() == correo) {
                 return indice
             }
         }
-        return 0
+        return 10
     }
 
-    fun delAmigo(nombre: String): Boolean {
+    fun delAmigo(nombre: String, correo: String): Boolean {
         for((indice, item) in amigos.withIndex()){
-            if (item.getNombre() == nombre) {
+            if (item.getNombre() == nombre && item.getCorreo() == correo) {
                 amigos.removeAt(indice)
                 return true
             }
@@ -76,14 +75,11 @@ class Usuario(private var correo:String): Serializable{
     }
 }
 
-class Amigo(private var nombre:String, private var ubicacion:String):Serializable{
+class Amigo(private var nombre:String):Serializable{
     private var correo = ""
-    constructor() : this("", "")
+    constructor() : this("")
     fun getNombre(): String{
         return nombre
-    }
-    fun getUbicacion(): String{
-        return ubicacion
     }
     fun getCorreo(): String{
         return correo
@@ -91,9 +87,8 @@ class Amigo(private var nombre:String, private var ubicacion:String):Serializabl
     fun setNombre(nombre: String){
         this.nombre = nombre
     }
-    fun setUbicacion(ubicacion: String){
-        this.ubicacion = ubicacion
-    }
+
+
     fun setCorreo(correo: String){
         this.correo = correo
     }

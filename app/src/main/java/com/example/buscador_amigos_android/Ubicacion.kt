@@ -8,6 +8,8 @@ import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -22,7 +24,7 @@ import com.google.android.gms.tasks.OnTokenCanceledListener
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
 
-class Ubicacion : AppCompatActivity() {
+class Ubicacion : AppCompatActivity(), OnAmigoClickListener {
     private lateinit var binding: ActivityUbicacionBinding
     private lateinit var localizacionUsuario: FusedLocationProviderClient
     private val db = FirebaseFirestore.getInstance()
@@ -46,7 +48,7 @@ class Ubicacion : AppCompatActivity() {
 
                     if (usuario != null) {
 
-                        binding.listaAmigos.adapter = AmigosAdapter(usuario.getAmigos())
+                        binding.listaAmigos.adapter = AmigosAdapter(usuario.getAmigos(),this)
                         val divider = DividerItemDecoration(binding.listaAmigos.context, DividerItemDecoration.VERTICAL)
                         binding.listaAmigos.addItemDecoration(divider)
 
@@ -104,7 +106,7 @@ class Ubicacion : AppCompatActivity() {
                                                     val duration = Toast.LENGTH_SHORT
                                                     val toast = Toast.makeText(applicationContext, text, duration)
                                                     toast.show()
-                                                    reescribir(usuario.getAmigos(),city,usuario.getNombre())
+                                                    //reescribir(usuario.getAmigos(),city,usuario.getNombre())
                                                 }
 
                                             }
@@ -114,6 +116,7 @@ class Ubicacion : AppCompatActivity() {
                         }
                     }.addOnFailureListener {
                         Log.d(".EXE", it.message!!)
+
                     }.addOnCanceledListener {
                         Log.d("Loc", "Cancelado")
 
@@ -124,6 +127,11 @@ class Ubicacion : AppCompatActivity() {
 
     }
 
+    override fun onAmigoClick(amigo: Amigo) {
+        TODO("Not yet implemented")
+    }
+
+    /*
     private fun reescribir(amigos: ArrayList<Amigo>, city: String, nombre: String) {
 
         var cant = amigos.size
@@ -145,4 +153,6 @@ class Ubicacion : AppCompatActivity() {
                 }
         }
     }
+    */
+
 }
