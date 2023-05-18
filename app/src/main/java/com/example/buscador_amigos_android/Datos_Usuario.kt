@@ -7,8 +7,17 @@ class Usuario(private var correo:String): Serializable{
     private var codigo = ""
     private var ubicacion =""
     private var amigos =ArrayList<Amigo>()
+    private var latitud = 0.0
+    private var longitud = 0.0
+
     constructor() : this("")
 
+    fun getLongitud(): Double{
+        return longitud
+    }
+    fun getLatitud(): Double{
+        return latitud
+    }
     fun getCorreo(): String{
         return correo
     }
@@ -23,6 +32,12 @@ class Usuario(private var correo:String): Serializable{
     }
     fun getAmigos() : ArrayList<Amigo> {
         return amigos
+    }
+    fun setLatitud(lat: Double){
+        this.latitud = lat
+    }
+    fun setLongitud(long: Double){
+        this.longitud = long
     }
 
     fun setCorreo(correo: String){

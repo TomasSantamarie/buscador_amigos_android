@@ -89,7 +89,7 @@ class RegistroUsuario : AppCompatActivity() {
                         var usuario = Usuario(email.toString())
                         usuario.setNombre(email.toString())
                         db.collection("Usuarios").document(usuario.getCorreo()).set(usuario)
-                        cambioPagina2(it.result?.user?.email ?:"", pss.toString())
+                        cambioPagina2(usuario.getCorreo(), pss.toString())
                     }else {
                         alerta()
                         binding.usuarioNoValido.isVisible = true
@@ -105,7 +105,7 @@ class RegistroUsuario : AppCompatActivity() {
     private fun alerta(){
         val builder = AlertDialog.Builder(this)
 
-        builder.setTitle("Error")
+        builder.setTitle("Nombre de usuario no valido")
         builder.setMessage("Se ha producido un error autentificando al usuario")
         builder.setPositiveButton("Aceptar", null)
 

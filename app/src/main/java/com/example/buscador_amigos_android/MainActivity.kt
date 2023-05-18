@@ -81,6 +81,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun cambioPagina2(email: String) {
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         val intent = Intent(this, Aplicacion::class.java).apply {
             putExtra("email", email)
         }

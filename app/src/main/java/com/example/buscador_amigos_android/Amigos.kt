@@ -57,7 +57,7 @@ class Amigos : AppCompatActivity(), OnAmigoClickListener {
                 if (binding.anadir.text.toString().equals("ELIMINAR"))
                     eliminarAmigo(emailUsuario)
                 else{
-                    if (binding.anadir.text.toString().equals("ACTUALIZAR"))
+                    if (binding.anadir.text.toString().equals("ACTUALIZAR") && binding.nuevo.text.toString().isNotEmpty())
                         editarAmigo(emailUsuario, binding.nuevo.text.toString(),binding.selecAmigo.text.toString())
                 }
                 binding.selecAmigo.text = "Ninguno"
@@ -101,10 +101,11 @@ class Amigos : AppCompatActivity(), OnAmigoClickListener {
             }
         }
     }
-    override fun onAmigoClick(amigo: Amigo) {
-        binding.correo.setText(amigo.getCorreo())
-        binding.selecAmigo.text = amigo.getNombre()
-
+    override fun onAmigoClick(amigo: Amigo, longAmigo: Double, latAmigo: Double) {
+        if (!binding.anadir.text.toString().equals("AÑADIR")){
+            binding.correo.setText(amigo.getCorreo())
+            binding.selecAmigo.text = amigo.getNombre()
+        }
     }
 
 

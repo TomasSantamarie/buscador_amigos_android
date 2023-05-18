@@ -14,7 +14,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="505dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginTop="70dp"
             android:layout_marginEnd="30dp"
@@ -49,22 +49,32 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp"
-                    android:text="Para guardar tu posición actual, deberás pulsar al botón que pone &quot;Guardar&quot;. Esta será la ubicación que podrán saber todos los usuarios que esten en tu lista de amigos."
+                    android:text="Para guardar tu posición actual, deberás pulsar al botón que pone &quot;Guardar&quot;. Esta será la ubicación que podrán saber todos los usuarios que estén en tu lista de amigos."
                     android:textColor="@color/teal_700" />
 
                 <Button
                     android:id="@+id/guardar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="15dp"
                     android:background="@drawable/borde_edittext_bien"
                     android:backgroundTint="@color/teal_200"
                     android:text="Guardar"
                     android:textColor="@color/white" />
 
+                <TextView
+                    android:id="@+id/alerta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Para poder encontrate con tus amigos , la aplicación necesitará un punto de origen "
+                    android:textColor="@color/red" />
+
                 <ScrollView
                     android:id="@+id/scrollView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="300dp">
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/listaAmigos"
                         android:layout_width="match_parent"

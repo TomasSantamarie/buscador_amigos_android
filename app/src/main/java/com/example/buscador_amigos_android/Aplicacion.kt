@@ -15,6 +15,7 @@ class Aplicacion : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAplicacionBinding.inflate(layoutInflater)
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
         val view = binding.root
         setContentView(view)
         val bundle = intent.extras

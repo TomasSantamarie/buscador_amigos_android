@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 
 interface OnAmigoClickListener {
-    fun onAmigoClick(amigo: Amigo)
+    fun onAmigoClick(amigo: Amigo, longAmigo: Double, latAmigo: Double)
 }
 
 class AmigosAdapter(var amigos: ArrayList<Amigo>, private val listener: OnAmigoClickListener) : RecyclerView.Adapter<AmigosAdapter.ViewHolder>() {
@@ -46,7 +46,10 @@ class AmigosAdapter(var amigos: ArrayList<Amigo>, private val listener: OnAmigoC
         private val nombre =  view.findViewById<TextView>(R.id.nombre_ListaAmigo)
         private val lugar =  view.findViewById<TextView>(R.id.ubicacion_ListaAmigo)
         private val email = view.findViewById<TextView>(R.id.correo_ListaAmigo)
+
         fun agregar(amigo: Amigo, listener: OnAmigoClickListener) {
+            var longAmigo = 0.0
+            var latAmigo = 0.0
             nombre.text = amigo.getNombre()
             email.text = amigo.getCorreo()
             db.collection("Usuarios").document(amigo.getCorreo())
@@ -57,13 +60,28 @@ class AmigosAdapter(var amigos: ArrayList<Amigo>, private val listener: OnAmigoC
 
                         if (usuario != null) {
                             lugar.text = usuario.getUbicacion()
+
+                            longAmigo = usuario.getLongitud()
+                            latAmigo = usuario.getLatitud()
                         }
                     }
                 }
 
             view.setOnClickListener {
-               listener.onAmigoClick(amigo)
+                db.collection("Usuarios").document(amigo.getCorreo())
+                    .get()
+                    .addOnSuccessListener {
+                        if (it != null) {
+                            val usuario = it.toObject(Usuario::class.java)
+                            if (usuario != null) {
+                                longAmigo = usuario.getLongitud()
+                                latAmigo = usuario.getLatitud()
+                            }
+                        }
+                    }
+               listener.onAmigoClick(amigo, longAmigo, latAmigo)
                 Log.d("CLICK", amigo.getCorreo())
+
             }
         }
 
