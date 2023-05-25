@@ -8,6 +8,7 @@ import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isGone
@@ -29,7 +30,7 @@ class Ubicacion : AppCompatActivity(), OnAmigoClickListener {
     private val db = FirebaseFirestore.getInstance()
     private var longitud: Double = 0.0
     private var latitud: Double = 0.0
-    private var email =""
+    private var email = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUbicacionBinding.inflate(layoutInflater)
@@ -52,13 +53,16 @@ class Ubicacion : AppCompatActivity(), OnAmigoClickListener {
 
                     if (usuario != null) {
 
-                        binding.listaAmigos.adapter = AmigosAdapter(usuario.getAmigos(),this)
-                        val divider = DividerItemDecoration(binding.listaAmigos.context, DividerItemDecoration.VERTICAL)
+                        binding.listaAmigos.adapter = AmigosAdapter(usuario.getAmigos(), this)
+                        val divider = DividerItemDecoration(
+                            binding.listaAmigos.context,
+                            DividerItemDecoration.VERTICAL
+                        )
                         binding.listaAmigos.addItemDecoration(divider)
                         longitud = usuario.getLongitud()
                         latitud = usuario.getLatitud()
                         if (usuario.getUbicacion().length < 1) {
-                            Log.v("Pasa", "Si pasa")
+                            Log.v("Sin ubicacion", "Si pasa")
                             binding.alerta.isGone = false
                             binding.listaAmigos.isGone = true
                         }
@@ -82,84 +86,106 @@ class Ubicacion : AppCompatActivity(), OnAmigoClickListener {
             ) {
                 ActivityCompat.requestPermissions(this, arrayOf(ACCESS_FINE_LOCATION), 1)
             } else {
-                localizacionUsuario.getCurrentLocation(LocationRequest.PRIORITY_HIGH_ACCURACY, object : CancellationToken() {
-                    override fun onCanceledRequested(p0: OnTokenCanceledListener) = CancellationTokenSource().token
-                    override fun isCancellationRequested() = false
-                }).addOnSuccessListener(this) { location ->
-                        if (location != null) {
+                localizacionUsuario.getCurrentLocation(
+                    LocationRequest.PRIORITY_HIGH_ACCURACY,
+                    object : CancellationToken() {
+                        override fun onCanceledRequested(p0: OnTokenCanceledListener) =
+                            CancellationTokenSource().token
 
-                            // Obtiene la ciudad a partir de la ubicación actual
-                            val geocoder = Geocoder(this, Locale.getDefault())
+                        override fun isCancellationRequested() = false
+                    }).addOnSuccessListener(this) { location ->
+                    if (location != null) {
 
-                            val addresses =
-                                geocoder.getFromLocation(location.latitude, location.longitude, 1)
-                            longitud = location.longitude
-                            Log.v("Long", longitud.toString())
-                            latitud = location.latitude
-                            Log.v("Lat", latitud.toString())
-                            val city = addresses?.get(0)?.locality
+                        // Obtiene la ciudad a partir de la ubicación actual
+                        val geocoder = Geocoder(this, Locale.getDefault())
 
-                            if (city != null) {
-                                Log.v("Ciudad",city)
+                        val addresses =
+                            geocoder.getFromLocation(location.latitude, location.longitude, 1)
+                        longitud = location.longitude
+                        Log.v("Long", longitud.toString())
+                        latitud = location.latitude
+                        Log.v("Lat", latitud.toString())
+                        val city = addresses?.get(0)?.locality
 
-                                db.collection("Usuarios").document(email)
-                                    .get()
-                                    .addOnSuccessListener {
-                                        if (it != null) {
-                                            val usuario = it.toObject(Usuario::class.java)
-                                            if (usuario != null) {
-                                                usuario.setUbicacion(city)
-                                                usuario.setLatitud(latitud)
-                                                Log.v("Long", longitud.toString())
-                                                usuario.setLongitud(longitud)
-                                                Log.v("Lat", latitud.toString())
-                                                db.collection("Usuarios").document(email).set(usuario)
-                                                if ((usuario.getUbicacion().length < 1)) {
-                                                    binding.alerta.isGone = true
-                                                    binding.listaAmigos.isGone = false
-                                                }
+                        if (city != null) {
+                            Log.v("Ciudad", city)
 
-                                                val text = "Ubicación: $city guardada!"
-                                                val duration = Toast.LENGTH_SHORT
-                                                val toast = Toast.makeText(applicationContext, text, duration)
-                                                toast.show()
-
+                            db.collection("Usuarios").document(email)
+                                .get()
+                                .addOnSuccessListener {
+                                    if (it != null) {
+                                        val usuario = it.toObject(Usuario::class.java)
+                                        if (usuario != null) {
+                                            usuario.setUbicacion(city)
+                                            usuario.setLatitud(latitud)
+                                            Log.v("Long", longitud.toString())
+                                            usuario.setLongitud(longitud)
+                                            Log.v("Lat", latitud.toString())
+                                            db.collection("Usuarios").document(email).set(usuario)
+                                            if ((usuario.getUbicacion().length > 1)) {
+                                                Log.v("Con ubicacion", "Si pasa")
+                                                binding.alerta.isGone = true
+                                                binding.listaAmigos.isGone = false
                                             }
+
+                                            val text = "Ubicación: $city guardada!"
+                                            val duration = Toast.LENGTH_SHORT
+                                            val toast =
+                                                Toast.makeText(applicationContext, text, duration)
+                                            toast.show()
+
                                         }
                                     }
-                            } else {
-                                Log.v("Ciudad","No esta")
-
-                            }
+                                }
+                        } else {
+                            Log.v("Ciudad", "No esta")
 
                         }
-                    }.addOnFailureListener {
-                        Log.d(".EXE", it.message!!)
-
-                    }.addOnCanceledListener {
-                        Log.d("Loc", "Cancelado")
 
                     }
+                }.addOnFailureListener {
+                    Log.d(".EXE", it.message!!)
+
+                }.addOnCanceledListener {
+                    Log.d("Loc", "Cancelado")
+
+                }
             }
         }
 
 
     }
 
-    override fun onAmigoClick(amigo: Amigo, longAmigo: Double, latAmigo: Double) {
+    override fun onAmigoClick(amigo: Amigo, longAmigo: Double, latAmigo: Double, lugar: TextView) {
 
-        val intent = Intent(this, Mapa::class.java).apply {
-            putExtra("email",email)
-            putExtra("LongUsuario",longitud)
-            Log.d("LongUsuario", longitud.toString())
-            putExtra("LatUsuario",latitud)
-            Log.d("LatUsuario", latitud.toString())
-            putExtra("LongAmigo",longAmigo)
-            Log.d("LongAmigo", longAmigo.toString())
-            putExtra("LatAmigo",latAmigo)
-            Log.d("LatAmigo", latAmigo.toString())
+        if (lugar.length()>1 && !longAmigo.equals(longitud) && !latAmigo.equals(latitud)){
+            val intent = Intent(this, Mapa::class.java).apply {
+                putExtra("email", email)
+                putExtra("LongUsuario", longitud)
+                Log.d("LongUsuario", longitud.toString())
+                putExtra("LatUsuario", latitud)
+                Log.d("LatUsuario", latitud.toString())
+                putExtra("LongAmigo", longAmigo)
+                Log.d("LongAmigo", longAmigo.toString())
+                putExtra("LatAmigo", latAmigo)
+                Log.d("LatAmigo", latAmigo.toString())
+            }
+            startActivity(intent)
+        } else{
+            if (longAmigo.equals(longitud) && latAmigo.equals(latitud)){
+                val text = "${amigo.getNombre()} y Tú estáis en el mismo lugar"
+                val duration = Toast.LENGTH_SHORT
+                val toast =
+                    Toast.makeText(applicationContext, text, duration)
+                toast.show()
+            } else {
+                val text = "${amigo.getNombre()} no ha guardado su ubicación!!"
+                val duration = Toast.LENGTH_SHORT
+                val toast =
+                    Toast.makeText(applicationContext, text, duration)
+                toast.show()
+            }
         }
-        startActivity(intent)
     }
 
 

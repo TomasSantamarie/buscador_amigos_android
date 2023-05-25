@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -19,6 +20,7 @@ class Amigos : AppCompatActivity(), OnAmigoClickListener {
         binding = ActivityAmigosBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 
         binding.camposAnadir.isGone = true
         binding.accionAdministrar.isGone = true
@@ -27,10 +29,10 @@ class Amigos : AppCompatActivity(), OnAmigoClickListener {
         val bundle = intent.extras
         val emailUsuario = bundle?.getString("email")
         val nombreUsuario = bundle?.getString("nombre")
-        val ubicacionUsuario = bundle?.getString("ubicacion")
+        //val ubicacionUsuario = bundle?.getString("ubicacion")
 
         val nombreAmigo = bundle?.getString("nombreAmigo")
-        val CorreoAmigo = bundle?.getString("CorreoAmigo")
+        //val CorreoAmigo = bundle?.getString("CorreoAmigo")
 
         binding.correo.setText(nombreAmigo)
 
@@ -40,11 +42,12 @@ class Amigos : AppCompatActivity(), OnAmigoClickListener {
         binding.anadir.setOnClickListener {
 
             Log.v("mensaje", binding.anadir.text.toString())
-            if (binding.anadir.text.toString().equals("AGREGAR")){
-                binding.titulo.text="Añadir Amigo"
-                binding.anadir.text="AÑADIR"
-                binding.volver.text="VOLVER"
-                binding.texto.text="La persona que añadas como amigo, podrá saber la ubicación que tengas guardada."
+            if (binding.anadir.text.toString().equals("AGREGAR")) {
+                binding.titulo.text = "Añadir Amigo"
+                binding.anadir.text = "AÑADIR"
+                binding.volver.text = "VOLVER"
+                binding.texto.text =
+                    "La persona que añadas como amigo, podrá saber la ubicación que tengas guardada."
                 binding.camposAnadir.isGone = false
                 binding.editar.isGone = true
                 binding.correo.setText("")
@@ -53,12 +56,18 @@ class Amigos : AppCompatActivity(), OnAmigoClickListener {
                 if (binding.anadir.text.toString().equals("AÑADIR"))
                     buscarAmigo(emailUsuario, nombreUsuario)
             }
-            if (!binding.selecAmigo.text.toString().equals("Ninguno")){
+            if (!binding.selecAmigo.text.toString().equals("Ninguno")) {
                 if (binding.anadir.text.toString().equals("ELIMINAR"))
                     eliminarAmigo(emailUsuario)
-                else{
-                    if (binding.anadir.text.toString().equals("ACTUALIZAR") && binding.nuevo.text.toString().isNotEmpty())
-                        editarAmigo(emailUsuario, binding.nuevo.text.toString(),binding.selecAmigo.text.toString())
+                else {
+                    if (binding.anadir.text.toString()
+                            .equals("ACTUALIZAR") && binding.nuevo.text.toString().isNotEmpty()
+                    )
+                        editarAmigo(
+                            emailUsuario,
+                            binding.nuevo.text.toString(),
+                            binding.selecAmigo.text.toString()
+                        )
                 }
                 binding.selecAmigo.text = "Ninguno"
 
@@ -66,34 +75,36 @@ class Amigos : AppCompatActivity(), OnAmigoClickListener {
 
         }
         binding.editar.setOnClickListener {
-            binding.titulo.text="Editar Nombre"
-            binding.anadir.text="ACTUALIZAR"
-            binding.tituloCorreo.text="Nombre del amigo"
-            binding.volver.text="VOLVER"
-            binding.texto.text="Para cambiar el nombre del amigo que quieras, necesitaremos su nombre y el nuevo que quieras ponerle"
-            binding.tituloCodigo.text="Nuevo Nombre"
-            binding.accionAdministrar.isGone=false
-            binding.camposAdministrar2.isGone=false
+            binding.titulo.text = "Editar Nombre"
+            binding.anadir.text = "ACTUALIZAR"
+            binding.tituloCorreo.text = "Nombre del amigo"
+            binding.volver.text = "VOLVER"
+            binding.texto.text =
+                "Para cambiar el nombre del amigo que quieras, necesitaremos su nombre y el nuevo que quieras ponerle"
+            binding.tituloCodigo.text = "Nuevo Nombre"
+            binding.accionAdministrar.isGone = false
+            binding.camposAdministrar2.isGone = false
             binding.editar.isGone = true
 
         }
         binding.volver.setOnClickListener {
 
 
-            if(binding.volver.text.toString().equals("VOLVER")) {
+            if (binding.volver.text.toString().equals("VOLVER")) {
                 val intent = Intent(this, Aplicacion::class.java).apply {
                     putExtra("email", emailUsuario)
                 }
                 startActivity(intent)
-            }else{
-                binding.titulo.text="Borrar Amigo"
-                binding.anadir.text="ELIMINAR"
-                binding.tituloCorreo.text="Nombre del amigo"
+            } else {
+                binding.titulo.text = "Borrar Amigo"
+                binding.anadir.text = "ELIMINAR"
+                binding.tituloCorreo.text = "Nombre del amigo"
                 binding.parteCodigo.isGone = true
-                binding.volver.text="VOLVER"
-                binding.texto.text="La persona que elimines como amigo, ya no podrá saber la ubicación que tengas guardada."
+                binding.volver.text = "VOLVER"
+                binding.texto.text =
+                    "La persona que elimines como amigo, ya no podrá saber la ubicación que tengas guardada."
                 binding.accionAdministrar.isGone = false
-                binding.actualizar.isGone=true
+                binding.actualizar.isGone = true
                 binding.camposAdministrar2.isGone = false
                 binding.editar.isGone = true
 
@@ -101,13 +112,13 @@ class Amigos : AppCompatActivity(), OnAmigoClickListener {
             }
         }
     }
-    override fun onAmigoClick(amigo: Amigo, longAmigo: Double, latAmigo: Double) {
-        if (!binding.anadir.text.toString().equals("AÑADIR")){
+
+    override fun onAmigoClick(amigo: Amigo, longAmigo: Double, latAmigo: Double, lugar: TextView) {
+        if (!binding.anadir.text.toString().equals("AÑADIR")) {
             binding.correo.setText(amigo.getCorreo())
             binding.selecAmigo.text = amigo.getNombre()
         }
     }
-
 
 
     private fun refrescar(emailUsuario: String?) {
@@ -120,7 +131,10 @@ class Amigos : AppCompatActivity(), OnAmigoClickListener {
                     if (usuario != null) {
 
                         binding.listaAmigos.adapter = AmigosAdapter(usuario.getAmigos(), this)
-                        val divider = DividerItemDecoration(binding.listaAmigos.context, DividerItemDecoration.VERTICAL)
+                        val divider = DividerItemDecoration(
+                            binding.listaAmigos.context,
+                            DividerItemDecoration.VERTICAL
+                        )
                         binding.listaAmigos.addItemDecoration(divider)
 
                     }
@@ -136,7 +150,9 @@ class Amigos : AppCompatActivity(), OnAmigoClickListener {
                     val usuario = it.toObject(Usuario::class.java)
 
                     if (usuario != null) {
-                        usuario.getAmigos()[usuario.encontrarAmigoCorreo(binding.correo.text.toString())].setNombre(nombreNuevo)
+                        usuario.getAmigos()[usuario.encontrarAmigoCorreo(binding.correo.text.toString())].setNombre(
+                            nombreNuevo
+                        )
                         db.collection("Usuarios").document(usuario.getCorreo()).set(usuario)
                         val text = "Hemos cambiado el nombre de $nombreViejo a $nombreNuevo"
                         val duration = Toast.LENGTH_SHORT
@@ -169,26 +185,31 @@ class Amigos : AppCompatActivity(), OnAmigoClickListener {
                                 toast.show()
                             } else {
                                 val emailAmigo = binding.correo.text.toString()
-                                if(usuario.delAmigo(nombreAmigo, emailAmigo)){
-                                    db.collection("Usuarios").document(usuario.getCorreo()).set(usuario)
+                                if (usuario.delAmigo(nombreAmigo, emailAmigo)) {
+                                    db.collection("Usuarios").document(usuario.getCorreo())
+                                        .set(usuario)
                                     val text = "Eliminado de tu lista de amigos"
                                     val duration = Toast.LENGTH_SHORT
                                     val toast =
                                         Toast.makeText(applicationContext, text, duration)
                                     toast.show()
 
-                                    Log.v("emailAmigo",emailAmigo)
+                                    Log.v("emailAmigo", emailAmigo)
                                     if (emailAmigo != "error") {
-                                        deleteAmigo(emailAmigo,usuario.getNombre(), usuario.getCorreo())
+                                        deleteAmigo(
+                                            emailAmigo,
+                                            usuario.getNombre(),
+                                            usuario.getCorreo()
+                                        )
                                         refrescar(emailUsuario)
-                                    }else {
+                                    } else {
                                         val text = "Algo falla"
                                         val duration = Toast.LENGTH_SHORT
                                         val toast =
                                             Toast.makeText(applicationContext, text, duration)
                                         toast.show()
                                     }
-                                }else {
+                                } else {
                                     val text = "No lo tienes como amigo"
                                     val duration = Toast.LENGTH_SHORT
                                     val toast =
@@ -197,14 +218,14 @@ class Amigos : AppCompatActivity(), OnAmigoClickListener {
                                 }
 
                             }
-                        }else{
+                        } else {
                             val text = "No existe nuestro usuario"
                             val duration = Toast.LENGTH_SHORT
                             val toast =
                                 Toast.makeText(applicationContext, text, duration)
                             toast.show()
                         }
-                    }else{
+                    } else {
                         val text = "No existe nuestro usuario"
                         val duration = Toast.LENGTH_SHORT
                         val toast =
@@ -214,7 +235,6 @@ class Amigos : AppCompatActivity(), OnAmigoClickListener {
 
                 }
         }
-
 
 
     }
@@ -228,7 +248,7 @@ class Amigos : AppCompatActivity(), OnAmigoClickListener {
                 if (it != null) {
                     val usuario = it.toObject(Usuario::class.java)
 
-                    if (usuario != null){
+                    if (usuario != null) {
                         if (emailUsuario != null) {
                             usuario.delAmigo(nombreUsuario, emailUsuario)
                         }
@@ -306,14 +326,14 @@ class Amigos : AppCompatActivity(), OnAmigoClickListener {
                                 toast.show()
                             }
                         }
-                    }else{
+                    } else {
                         val text = "Correo o código incorrectos"
                         val duration = Toast.LENGTH_SHORT
                         val toast =
                             Toast.makeText(applicationContext, text, duration)
                         toast.show()
                     }
-                }else{
+                } else {
                     val text = "Correo o código incorrectos"
                     val duration = Toast.LENGTH_SHORT
                     val toast =
@@ -333,7 +353,7 @@ class Amigos : AppCompatActivity(), OnAmigoClickListener {
                 if (it != null) {
                     val usuario = it.toObject(Usuario::class.java)
 
-                    if (usuario != null){
+                    if (usuario != null) {
                         usuario.getAmigos().add(amigo)
                         db.collection("Usuarios").document(usuario.getCorreo()).set(usuario)
                         refrescar(emailUsuario)

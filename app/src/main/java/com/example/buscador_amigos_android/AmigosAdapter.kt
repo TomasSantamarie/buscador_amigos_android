@@ -9,11 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 
 interface OnAmigoClickListener {
-    fun onAmigoClick(amigo: Amigo, longAmigo: Double, latAmigo: Double)
+    fun onAmigoClick(amigo: Amigo, longAmigo: Double, latAmigo: Double, lugar: TextView)
 }
 
-class AmigosAdapter(var amigos: ArrayList<Amigo>, private val listener: OnAmigoClickListener) : RecyclerView.Adapter<AmigosAdapter.ViewHolder>() {
-
+class AmigosAdapter(var amigos: ArrayList<Amigo>, private val listener: OnAmigoClickListener) :
+    RecyclerView.Adapter<AmigosAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -40,11 +40,10 @@ class AmigosAdapter(var amigos: ArrayList<Amigo>, private val listener: OnAmigoC
     override fun getItemCount(): Int = amigos.size
 
 
-
-    class ViewHolder(val view: View): RecyclerView.ViewHolder(view) {
+    class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         private val db = FirebaseFirestore.getInstance()
-        private val nombre =  view.findViewById<TextView>(R.id.nombre_ListaAmigo)
-        private val lugar =  view.findViewById<TextView>(R.id.ubicacion_ListaAmigo)
+        private val nombre = view.findViewById<TextView>(R.id.nombre_ListaAmigo)
+        private val lugar = view.findViewById<TextView>(R.id.ubicacion_ListaAmigo)
         private val email = view.findViewById<TextView>(R.id.correo_ListaAmigo)
 
         fun agregar(amigo: Amigo, listener: OnAmigoClickListener) {
@@ -79,7 +78,7 @@ class AmigosAdapter(var amigos: ArrayList<Amigo>, private val listener: OnAmigoC
                             }
                         }
                     }
-               listener.onAmigoClick(amigo, longAmigo, latAmigo)
+                listener.onAmigoClick(amigo, longAmigo, latAmigo,lugar)
                 Log.d("CLICK", amigo.getCorreo())
 
             }

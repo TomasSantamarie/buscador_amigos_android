@@ -114,7 +114,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="Para agregar a un usuario a tu lista de amigos, es necesario que dispongan del correo electrónico asociado a su cuenta, así como del código correspondiente."
+                        android:text="Para agregar a un usuario a su lista de amigos, es necesario que dispongan del correo electrónico asociado a su cuenta, así como del código correspondiente."
                         android:textColor="@color/teal_700" />
                 </LinearLayout>
 

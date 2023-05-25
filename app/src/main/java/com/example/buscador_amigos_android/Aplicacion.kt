@@ -25,7 +25,7 @@ class Aplicacion : AppCompatActivity() {
         if (email != null) {
             db.collection("Usuarios").document(email.toString())
                 .get()
-                  .addOnSuccessListener {
+                .addOnSuccessListener {
                     if (it != null) {
                         val usuario = it.toObject(Usuario::class.java)
 
@@ -34,12 +34,12 @@ class Aplicacion : AppCompatActivity() {
                             binding.nombre.setText(usuario.getNombre())
                             binding.contador.setText(usuario.getAmigos().size.toString())
 
-                            binding.cuenta.setOnClickListener{
+                            binding.cuenta.setOnClickListener {
                                 val intent = Intent(this, Cuenta::class.java).apply {
-                                    putExtra("nombre",usuario.getNombre())
-                                    putExtra("email",usuario.getCorreo())
-                                    putExtra("codigo",usuario.getCodigo())
-                                    putExtra("ubicacion",usuario.getUbicacion())
+                                    putExtra("nombre", usuario.getNombre())
+                                    putExtra("email", usuario.getCorreo())
+                                    putExtra("codigo", usuario.getCodigo())
+                                    putExtra("ubicacion", usuario.getUbicacion())
                                 }
                                 startActivity(intent)
                             }
@@ -47,17 +47,17 @@ class Aplicacion : AppCompatActivity() {
 
                             binding.amigos.setOnClickListener {
                                 val intent = Intent(this, Amigos::class.java).apply {
-                                    putExtra("email",usuario.getCorreo())
-                                    putExtra("nombre",usuario.getNombre())
-                                    putExtra("ubicacion",usuario.getUbicacion())
+                                    putExtra("email", usuario.getCorreo())
+                                    putExtra("nombre", usuario.getNombre())
+                                    //putExtra("ubicacion",usuario.getUbicacion())
                                 }
                                 startActivity(intent)
                             }
                             binding.ubicacion.setOnClickListener {
                                 val intent = Intent(this, Ubicacion::class.java).apply {
-                                    putExtra("email",usuario.getCorreo())
-                                    putExtra("nombre",usuario.getNombre())
-                                    putExtra("ubicacion",usuario.getUbicacion())
+                                    putExtra("email", usuario.getCorreo())
+                                    //putExtra("nombre",usuario.getNombre())
+                                    //putExtra("ubicacion",usuario.getUbicacion())
                                 }
                                 startActivity(intent)
                             }
@@ -67,10 +67,6 @@ class Aplicacion : AppCompatActivity() {
                     }
                 }
         }
-
-
-
-
 
 
     }

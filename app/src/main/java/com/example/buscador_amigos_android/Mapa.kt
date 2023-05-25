@@ -28,6 +28,7 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
     // Usuario
     private var originLatitude: Double = 0.0
     private var originLongitude: Double = 0.0
+
     //Amigo
     private var destinationLatitude: Double = 0.0
     private var destinationLongitude: Double = 0.0
@@ -42,24 +43,24 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
         originLatitude = bundle?.getDouble("LatUsuario")!!
         Log.d("Lat", originLatitude.toString())
         originLongitude = bundle?.getDouble("LongUsuario")!!
-        Log.d("Long", originLongitude .toString())
+        Log.d("Long", originLongitude.toString())
 
         destinationLatitude = bundle?.getDouble("LatAmigo")!!
         Log.d("Lat", destinationLatitude.toString())
         destinationLongitude = bundle?.getDouble("LongAmigo")!!
-        Log.d("Long", destinationLongitude .toString())
+        Log.d("Long", destinationLongitude.toString())
         // Fetching API_KEY which we wrapped
         val ai: ApplicationInfo = applicationContext.packageManager
             .getApplicationInfo(applicationContext.packageName, PackageManager.GET_META_DATA)
         val value = ai.metaData["com.google.android.geo.API_KEY"]
         val apiKey = value.toString()
 
-        // Initializing the Places API with the help of our API_KEY
+
         if (!Places.isInitialized()) {
             Places.initialize(applicationContext, apiKey)
         }
 
-        // Map Fragment
+
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
@@ -75,10 +76,10 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
             map.animateCamera(CameraUpdateFactory.newLatLngZoom(originLocation, 14F))
         }
 
-        // Back btn
+
         findViewById<Button>(R.id.volver).setOnClickListener {
             val intent = Intent(this, Ubicacion::class.java).apply {
-                putExtra("email",email)
+                putExtra("email", email)
             }
             startActivity(intent)
         }

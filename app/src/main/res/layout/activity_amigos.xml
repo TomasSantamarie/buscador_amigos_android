@@ -12,221 +12,222 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="30dp"
-            android:background="@drawable/borde_edittext_bien"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="128dp"
-                android:layout_height="97dp"
-                android:layout_marginStart="110dp"
-                android:layout_marginTop="20dp"
-                app:srcCompat="@drawable/elegir" />
-
-            <TextView
-                android:id="@+id/titulo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="70dp"
-                android:layout_marginTop="20dp"
-                android:text="Elegir opción"
-                android:textColor="@color/black"
-                android:textSize="34sp" />
-
-            <TextView
-                android:id="@+id/textView13"
-                android:layout_width="260dp"
-                android:layout_height="3dp"
-                android:layout_marginStart="40dp"
-                android:background="@drawable/botones"
-                android:text="." />
-
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/volver"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/botones"
-                    android:backgroundTint="@null"
-                    android:text="Eliminar"
-                    android:textColor="@color/white" />
-
-                <Button
-                    android:id="@+id/anadir"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/botones"
-                    android:backgroundTint="@null"
-                    android:text="AGREGAR"
-                    android:textColor="@color/white" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/camposAnadir"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="30dp"
+                android:background="@drawable/borde_edittext_bien"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tituloCorreo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Correo Electrónico"
-                    android:textSize="20sp" />
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="128dp"
+                    android:layout_height="97dp"
+                    android:layout_marginStart="110dp"
+                    android:layout_marginTop="20dp"
+                    app:srcCompat="@drawable/elegir" />
 
-                <EditText
-                    android:id="@+id/correo"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/titulo"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textPersonName" />
+                    android:layout_marginStart="70dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Elegir opción"
+                    android:textColor="@color/black"
+                    android:textSize="34sp" />
+
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="260dp"
+                    android:layout_height="3dp"
+                    android:layout_marginStart="40dp"
+                    android:background="@drawable/botones"
+                    android:text="." />
 
                 <LinearLayout
-                    android:id="@+id/parteCodigo"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/volver"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/botones"
+                        android:backgroundTint="@null"
+                        android:text="Eliminar"
+                        android:textColor="@color/white" />
+
+                    <Button
+                        android:id="@+id/anadir"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/botones"
+                        android:backgroundTint="@null"
+                        android:text="AGREGAR"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/camposAnadir"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="30dp"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tituloCodigo"
+                        android:id="@+id/tituloCorreo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="Código"
+                        android:text="Correo Electrónico"
                         android:textSize="20sp" />
 
                     <EditText
-                        android:id="@+id/codigo"
+                        android:id="@+id/correo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:inputType="textPersonName" />
+
+                    <LinearLayout
+                        android:id="@+id/parteCodigo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tituloCodigo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="Código"
+                            android:textSize="20sp" />
+
+                        <EditText
+                            android:id="@+id/codigo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:inputType="textPersonName" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/texto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Al agregar a un usuario a tu lista de amigos éste tendrá acceso a la información de tu ubicación que hayas guardado."
+                        android:textColor="@color/teal_700" />
+
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/texto"
+                <LinearLayout
+                    android:id="@+id/accionAdministrar"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Al agregar a un usuario a tu lista de amigos éste tendrá acceso a la información de tu ubicación que hayas guardado."
-                    android:textColor="@color/teal_700" />
+                    android:layout_height="match_parent"
+                    android:layout_margin="30dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/tituloCorreo2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Selecciona a un amigo"
+                        android:textSize="20sp" />
 
-            <LinearLayout
-                android:id="@+id/accionAdministrar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="30dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tituloCorreo2"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Selecciona a un amigo"
-                    android:textSize="20sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginBottom="10dp"
-                android:clickable="false"
-                android:orientation="vertical">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/listaAmigos"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="150dp"
+                    android:layout_marginBottom="10dp"
                     android:clickable="false"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    tools:listitem="@layout/objeto_lista" />
+                    android:orientation="vertical">
 
-            </LinearLayout>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/listaAmigos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        tools:listitem="@layout/objeto_lista" />
 
-            <LinearLayout
-                android:id="@+id/camposAdministrar2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="30dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tituloCorreo3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Amigo seleccionado:"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/selecAmigo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Ninguno" />
+                </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/actualizar"
+                    android:id="@+id/camposAdministrar2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_margin="30dp"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tituloCodigo2"
+                        android:id="@+id/tituloCorreo3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="Nuevo Nombre"
+                        android:text="Amigo seleccionado:"
                         android:textSize="20sp" />
 
-                    <EditText
-                        android:id="@+id/nuevo"
+                    <TextView
+                        android:id="@+id/selecAmigo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="textPersonName" />
+                        android:text="Ninguno" />
+
+                    <LinearLayout
+                        android:id="@+id/actualizar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tituloCodigo2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="Nuevo Nombre"
+                            android:textSize="20sp" />
+
+                        <EditText
+                            android:id="@+id/nuevo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:inputType="textPersonName" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
+                <Button
+                    android:id="@+id/editar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="90dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="90dp"
+                    android:layout_marginBottom="30dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/botones"
+                    android:backgroundTint="@null"
+                    android:text="Editar"
+                    android:textColor="@color/white" />
+
             </LinearLayout>
-
-            <Button
-                android:id="@+id/editar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="90dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="90dp"
-                android:layout_marginBottom="30dp"
-                android:layout_weight="1"
-                android:background="@drawable/botones"
-                android:backgroundTint="@null"
-                android:text="Editar"
-                android:textColor="@color/white" />
-
         </LinearLayout>
-    </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

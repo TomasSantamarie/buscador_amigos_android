@@ -17,7 +17,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -35,20 +34,26 @@ class MainActivity : AppCompatActivity() {
         binding.user.setText(email)
         binding.textPassword.setText(pss)
 
-        binding.textPassword.addTextChangedListener( object : TextWatcher {
+        binding.textPassword.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 binding.user.setBackgroundResource(R.drawable.borde_edittext_bien)
-                binding.textPassword.setBackgroundResource(R.drawable.borde_edittext_bien)}
+                binding.textPassword.setBackgroundResource(R.drawable.borde_edittext_bien)
+            }
+
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {} })
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
 
 
-        binding.user.addTextChangedListener( object : TextWatcher {
+        binding.user.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 binding.user.setBackgroundResource(R.drawable.borde_edittext_bien)
-                binding.textPassword.setBackgroundResource(R.drawable.borde_edittext_bien)}
+                binding.textPassword.setBackgroundResource(R.drawable.borde_edittext_bien)
+            }
+
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {} })
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
     }
 
     @SuppressLint("SuspiciousIndentation")
@@ -57,27 +62,29 @@ class MainActivity : AppCompatActivity() {
         val email = binding.user.text
         val pss = binding.textPassword.text
 
-            if (email.isNotEmpty() && pss.isNotEmpty()){
+        if (email.isNotEmpty() && pss.isNotEmpty()) {
 
-                FirebaseAuth.getInstance()
-                    .signInWithEmailAndPassword(email.toString(),
-                        pss.toString()).addOnCompleteListener {
-                    if (it.isSuccessful){
+            FirebaseAuth.getInstance()
+                .signInWithEmailAndPassword(
+                    email.toString(),
+                    pss.toString()
+                ).addOnCompleteListener {
+                    if (it.isSuccessful) {
                         Log.v("correo", email.toString())
                         cambioPagina2(email.toString())
-                    }else {
+                    } else {
                         binding.error.isVisible = true
                         binding.user.setBackgroundResource(R.drawable.borde_edittext_mal)
                         binding.textPassword.setBackgroundResource(R.drawable.borde_edittext_mal)
                     }
                 }
-            }
+        }
 
     }
+
     private fun cambioPagina() {
         val intent = Intent(this, RegistroUsuario::class.java)
         startActivity(intent)
-
     }
 
     private fun cambioPagina2(email: String) {

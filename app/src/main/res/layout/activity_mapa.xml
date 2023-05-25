@@ -17,6 +17,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="36dp"
         android:text="Volver"
+        android:textColor="@color/white"
+        android:background="@drawable/botones"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

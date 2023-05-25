@@ -33,7 +33,7 @@ class RegistroUsuario : AppCompatActivity() {
 
         binding.crearCuenta2.setOnClickListener { cambioPagina() }
 
-        binding.contrasena1.addTextChangedListener( object : TextWatcher {
+        binding.contrasena1.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (binding.contrasena1.text.toString().length > 8) {
                     binding.minCaracteres.isVisible = true
@@ -41,9 +41,10 @@ class RegistroUsuario : AppCompatActivity() {
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {} })
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
 
-        binding.contrasena1.addTextChangedListener( object : TextWatcher {
+        binding.contrasena1.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (binding.contrasena1.text.toString().length < 8) {
                     binding.minCaracteres.isVisible = true
@@ -55,11 +56,14 @@ class RegistroUsuario : AppCompatActivity() {
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {} })
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
 
-        binding.contrasena2.addTextChangedListener( object : TextWatcher {
+        binding.contrasena2.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                if (!binding.contrasena1.text.toString().equals(findViewById<EditText>(R.id.contrasena2).text.toString())) {
+                if (!binding.contrasena1.text.toString()
+                        .equals(findViewById<EditText>(R.id.contrasena2).text.toString())
+                ) {
                     binding.noCoinciden.isVisible = true
                     binding.login2.isEnabled = false
                     binding.contrasena2.setBackgroundResource(R.drawable.borde_edittext_mal)
@@ -71,7 +75,8 @@ class RegistroUsuario : AppCompatActivity() {
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {} })
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
     }
 
     @SuppressLint("SuspiciousIndentation")
@@ -80,29 +85,33 @@ class RegistroUsuario : AppCompatActivity() {
         val email = binding.user2.text
         val pss = binding.contrasena1.text
 
-            if (email.isNotEmpty() && pss.isNotEmpty()){
+        if (email.isNotEmpty() && pss.isNotEmpty()) {
 
-                FirebaseAuth.getInstance()
-                    .createUserWithEmailAndPassword(email.toString(),
-                        pss.toString()).addOnCompleteListener {
-                    if (it.isSuccessful){
+            FirebaseAuth.getInstance()
+                .createUserWithEmailAndPassword(
+                    email.toString(),
+                    pss.toString()
+                ).addOnCompleteListener {
+                    if (it.isSuccessful) {
                         var usuario = Usuario(email.toString())
                         usuario.setNombre(email.toString())
                         db.collection("Usuarios").document(usuario.getCorreo()).set(usuario)
                         cambioPagina2(usuario.getCorreo(), pss.toString())
-                    }else {
+                    } else {
                         alerta()
                         binding.usuarioNoValido.isVisible = true
                     }
                 }
-            }
+        }
 
     }
+
     private fun cambioPagina() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
     }
-    private fun alerta(){
+
+    private fun alerta() {
         val builder = AlertDialog.Builder(this)
 
         builder.setTitle("Nombre de usuario no valido")
@@ -113,7 +122,7 @@ class RegistroUsuario : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun cambioPagina2(email:String, pss: String){
+    private fun cambioPagina2(email: String, pss: String) {
 
         val registroIntent = Intent(this, MainActivity::class.java).apply {
             putExtra("email", email)

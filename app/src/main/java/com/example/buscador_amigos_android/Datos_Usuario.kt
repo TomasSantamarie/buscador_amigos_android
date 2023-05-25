@@ -2,72 +2,84 @@ package com.example.buscador_amigos_android
 
 import java.io.Serializable
 
-class Usuario(private var correo:String): Serializable{
-    private var nombre =""
+class Usuario(private var correo: String) : Serializable {
+    private var nombre = ""
     private var codigo = ""
-    private var ubicacion =""
-    private var amigos =ArrayList<Amigo>()
+    private var ubicacion = ""
+    private var amigos = ArrayList<Amigo>()
     private var latitud = 0.0
     private var longitud = 0.0
 
     constructor() : this("")
 
-    fun getLongitud(): Double{
+    fun getLongitud(): Double {
         return longitud
     }
-    fun getLatitud(): Double{
+
+    fun getLatitud(): Double {
         return latitud
     }
-    fun getCorreo(): String{
+
+    fun getCorreo(): String {
         return correo
     }
-    fun getNombre(): String{
+
+    fun getNombre(): String {
         return nombre
     }
-    fun getCodigo(): String{
+
+    fun getCodigo(): String {
         return codigo
     }
-    fun getUbicacion():String{
+
+    fun getUbicacion(): String {
         return ubicacion
     }
-    fun getAmigos() : ArrayList<Amigo> {
+
+    fun getAmigos(): ArrayList<Amigo> {
         return amigos
     }
-    fun setLatitud(lat: Double){
+
+    fun setLatitud(lat: Double) {
         this.latitud = lat
     }
-    fun setLongitud(long: Double){
+
+    fun setLongitud(long: Double) {
         this.longitud = long
     }
 
-    fun setCorreo(correo: String){
+    fun setCorreo(correo: String) {
         this.correo = correo
     }
-    fun setNombre(nombre: String){
+
+    fun setNombre(nombre: String) {
         this.nombre = nombre
     }
-    fun setCodigo(codigo : String){
+
+    fun setCodigo(codigo: String) {
         this.codigo = codigo
     }
-    fun setUbicacion(ubicacion: String){
+
+    fun setUbicacion(ubicacion: String) {
         this.ubicacion = ubicacion
     }
 
-    fun setAmigos(amigos: ArrayList<Amigo>){
+    fun setAmigos(amigos: ArrayList<Amigo>) {
         this.amigos = amigos
     }
 
 
-    fun encontrarAmigo(nombre: String):String{
-        for((indice, item) in amigos.withIndex()){
+    fun encontrarAmigo(nombre: String): String {
+        for ((indice, item) in amigos.withIndex()) {
             if (item.getNombre() == nombre) {
                 return item.getCorreo()
             }
         }
         return "error"
     }
+
     fun encontrarAmigoCorreo(correo: String): Int {
-        for((indice, item) in amigos.withIndex()){
+        for ((indice, item) in amigos.withIndex()) {
             if (item.getCorreo() == correo) {
                 return indice
             }
@@ -76,7 +88,7 @@ class Usuario(private var correo:String): Serializable{
     }
 
     fun delAmigo(nombre: String, correo: String): Boolean {
-        for((indice, item) in amigos.withIndex()){
+        for ((indice, item) in amigos.withIndex()) {
             if (item.getNombre() == nombre && item.getCorreo() == correo) {
                 amigos.removeAt(indice)
                 return true
@@ -90,21 +102,25 @@ class Usuario(private var correo:String): Serializable{
     }
 }
 
-class Amigo(private var nombre:String):Serializable{
+class Amigo(private var nombre: String) : Serializable {
     private var correo = ""
+
     constructor() : this("")
-    fun getNombre(): String{
+
+    fun getNombre(): String {
         return nombre
     }
-    fun getCorreo(): String{
+
+    fun getCorreo(): String {
         return correo
     }
-    fun setNombre(nombre: String){
+
+    fun setNombre(nombre: String) {
         this.nombre = nombre
     }
 
 
-    fun setCorreo(correo: String){
+    fun setCorreo(correo: String) {
         this.correo = correo
     }
 
