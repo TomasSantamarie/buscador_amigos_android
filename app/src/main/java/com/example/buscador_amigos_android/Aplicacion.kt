@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.example.buscador_amigos_android.databinding.ActivityAplicacionBinding
-import com.example.buscador_amigos_android.databinding.ActivityRegistroUsuarioBinding
 import com.google.firebase.firestore.FirebaseFirestore
 
 class Aplicacion : AppCompatActivity() {
@@ -58,6 +57,13 @@ class Aplicacion : AppCompatActivity() {
                                     putExtra("email", usuario.getCorreo())
                                     //putExtra("nombre",usuario.getNombre())
                                     //putExtra("ubicacion",usuario.getUbicacion())
+                                }
+                                startActivity(intent)
+                            }
+
+                            binding.listachat.setOnClickListener {
+                                val intent = Intent(this, ListaChat::class.java).apply {
+                                    putExtra("email", usuario.getCorreo())
                                 }
                                 startActivity(intent)
                             }

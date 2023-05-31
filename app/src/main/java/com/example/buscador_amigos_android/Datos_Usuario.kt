@@ -1,6 +1,8 @@
 package com.example.buscador_amigos_android
 
 import java.io.Serializable
+import java.util.*
+import kotlin.collections.ArrayList
 
 class Usuario(private var correo: String) : Serializable {
     private var nombre = ""
@@ -104,6 +106,7 @@ class Usuario(private var correo: String) : Serializable {
 
 class Amigo(private var nombre: String) : Serializable {
     private var correo = ""
+    private var chatId =""
 
     constructor() : this("")
 
@@ -114,6 +117,9 @@ class Amigo(private var nombre: String) : Serializable {
     fun getCorreo(): String {
         return correo
     }
+    fun getChatId(): String {
+        return chatId
+    }
 
     fun setNombre(nombre: String) {
         this.nombre = nombre
@@ -123,5 +129,19 @@ class Amigo(private var nombre: String) : Serializable {
     fun setCorreo(correo: String) {
         this.correo = correo
     }
+    fun setChatId(chatId : String) {
+        this.chatId = chatId
+    }
 
 }
+
+data class Chats(
+    var id: String = "",
+    var name: String = "",
+    var users: List<String> = emptyList()
+)
+data class Message (
+    var message: String = "",
+    var from: String = "",
+    var dob: Date = Date()
+)

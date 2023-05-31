@@ -11,10 +11,12 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.buscador_amigos_android.databinding.ActivityAmigosBinding
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.*
 
 class Amigos : AppCompatActivity(), OnAmigoClickListener {
     private lateinit var binding: ActivityAmigosBinding
     private val db = FirebaseFirestore.getInstance()
+    private var ChatId = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAmigosBinding.inflate(layoutInflater)
@@ -302,6 +304,8 @@ class Amigos : AppCompatActivity(), OnAmigoClickListener {
                                             Toast.makeText(applicationContext, text, duration)
                                         toast.show()
                                     } else {
+                                        crearChat(nombreUsuario,usuario.getNombre(),emailUsuario,emailAmigo)
+                                        amigo.setChatId(ChatId)
                                         usuario.getAmigos().add(amigo)
                                         db.collection("Usuarios").document(usuario.getCorreo())
                                             .set(usuario)
@@ -358,9 +362,36 @@ class Amigos : AppCompatActivity(), OnAmigoClickListener {
                         db.collection("Usuarios").document(usuario.getCorreo()).set(usuario)
                         refrescar(emailUsuario)
 
+
                         Log.v("usuario", usuario.getAmigos().toString())
                     }
                 }
             }
+    }
+
+    private fun crearChat(
+        nombreUsuario: String,
+        nombreAmigo: String,
+        emailUsuario: String?,
+        emailAmigo: String
+    ) {
+        val chatId = UUID.randomUUID().toString()
+        val users = listOf(nombreUsuario, nombreAmigo)
+
+        ChatId = chatId
+        var chat = Chats(
+            id = chatId,
+            name = "Chat de $nombreUsuario y $nombreAmigo",
+            users = users
+        )
+
+        db.collection("chats").document(chatId).set(chat)
+        chat.name = "Chat con $nombreAmigo"
+        if (emailUsuario != null) {
+            db.collection("Usuarios").document(emailUsuario).collection("chats").document(chatId).set(chat)
+        }
+        chat.name = "Chat con $nombreUsuario"
+        db.collection("Usuarios").document(emailAmigo).collection("chats").document(chatId).set(chat)
+
     }
 }

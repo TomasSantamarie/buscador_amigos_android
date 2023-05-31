@@ -2,16 +2,18 @@
 
 buildscript {
     dependencies {
+        //Para usar los servicios de google
         classpath 'com.google.gms:google-services:4.3.15'
+
+        //Para el chat
+        classpath "com.android.tools.build:gradle:4.0.1"
     }
 }
-
 plugins {
     id 'com.android.application' version '7.3.1' apply false
     id 'com.android.library' version '7.3.1' apply false
     id 'org.jetbrains.kotlin.android' version '1.7.20' apply false
     //Googlemap
     id 'com.google.secrets_gradle_plugin' version '0.4'}
-
 
 
