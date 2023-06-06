@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.buscador_amigos_android.databinding.ActivityAplicacionBinding
 import com.example.buscador_amigos_android.databinding.ActivityChatBinding
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
@@ -38,43 +37,44 @@ class Chat : AppCompatActivity() {
             }
             startActivity(intent)
         }
+
+
+        binding.sendMensajeButton.setOnClickListener { enviarMensaje() }
     }
 
     private fun initViews(){
-        binding.messagesRecylerView.layoutManager = LinearLayoutManager(this)
-        binding.messagesRecylerView.adapter = MessageAdapter(usuario)
+        binding.mensajesRecylerView.layoutManager = LinearLayoutManager(this)
+        binding.mensajesRecylerView.adapter = MessageAdapter(usuario)
 
-        binding.sendMessageButton.setOnClickListener { sendMessage() }
 
         val chatRef = db.collection("chats").document(chatId)
-
-        chatRef.collection("messages").orderBy("dob", Query.Direction.ASCENDING)
+        chatRef.collection("mensajes").orderBy("fecha", Query.Direction.ASCENDING)
             .get()
             .addOnSuccessListener { messages ->
-                val listMessages = messages.toObjects(Message::class.java)
-                (binding.messagesRecylerView.adapter as MessageAdapter).setData(listMessages)
+                val listMessages = messages.toObjects(Mensaje::class.java)
+                (binding.mensajesRecylerView.adapter as MessageAdapter).setData(listMessages)
             }
 
-        chatRef.collection("messages").orderBy("dob", Query.Direction.ASCENDING)
+        chatRef.collection("mensajes").orderBy("fecha", Query.Direction.ASCENDING)
             .addSnapshotListener { messages, error ->
                 if(error == null){
                     messages?.let {
-                        val listMessages = it.toObjects(Message::class.java)
-                        (binding.messagesRecylerView.adapter as MessageAdapter).setData(listMessages)
+                        val listMessages = it.toObjects(Mensaje::class.java)
+                        (binding.mensajesRecylerView.adapter as MessageAdapter).setData(listMessages)
                     }
                 }
             }
     }
 
-    private fun sendMessage(){
-        val message = Message(
-            message = binding.messageTextField.text.toString(),
+    private fun enviarMensaje(){
+        val mensaje = Mensaje(
+            mensaje = binding.mensajeTextField.text.toString(),
             from = usuario
         )
 
-        db.collection("chats").document(chatId).collection("messages").document().set(message)
+        db.collection("chats").document(chatId).collection("mensajes").document().set(mensaje)
 
-        binding.messageTextField.setText("")
+        binding.mensajeTextField.setText("")
 
 
     }

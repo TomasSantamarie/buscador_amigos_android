@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 
 class MessageAdapter(private val user: String): RecyclerView.Adapter<MessageAdapter.MessageViewHolder>() {
 
-    private var messages: List<Message> = emptyList()
+    private var messages: List<Mensaje> = emptyList()
 
-    fun setData(list: List<Message>){
+    fun setData(list: List<Mensaje>){
         messages = list
         notifyDataSetChanged()
     }
@@ -30,13 +30,13 @@ class MessageAdapter(private val user: String): RecyclerView.Adapter<MessageAdap
         val message = messages[position]
 
         if(user == message.from){
-            holder.itemView.findViewById<ConstraintLayout>(R.id.myMessageLayout).visibility = View.VISIBLE
-            holder.itemView.findViewById<ConstraintLayout>(R.id.otherMessageLayout).visibility = View.GONE
-            holder.itemView.findViewById<TextView>(R.id.myMessageTextView).text = message.message
+            holder.itemView.findViewById<ConstraintLayout>(R.id.miMensajeLayout).visibility = View.VISIBLE
+            holder.itemView.findViewById<ConstraintLayout>(R.id.suMensajeLayout).visibility = View.GONE
+            holder.itemView.findViewById<TextView>(R.id.miMensajeTextView).text = message.mensaje
         } else {
-            holder.itemView.findViewById<TextView>(R.id.myMessageTextView).visibility = View.GONE
-            holder.itemView.findViewById<TextView>(R.id.othersMessageTextView).visibility = View.VISIBLE
-            holder.itemView.findViewById<TextView>(R.id.othersMessageTextView).text = message.message
+            holder.itemView.findViewById<TextView>(R.id.miMensajeTextView).visibility = View.GONE
+            holder.itemView.findViewById<TextView>(R.id.suMensajeTextView).visibility = View.VISIBLE
+            holder.itemView.findViewById<TextView>(R.id.suMensajeTextView).text = message.mensaje
         }
 
     }

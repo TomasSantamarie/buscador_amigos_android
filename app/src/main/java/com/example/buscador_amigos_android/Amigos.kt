@@ -179,13 +179,7 @@ class Amigos : AppCompatActivity(), OnAmigoClickListener {
                         val usuario = it.toObject(Usuario::class.java)
 
                         if (usuario != null) {
-                            if (usuario.getNombre().equals(nombreAmigo)) {
-                                val text = "No puedes eliminarte"
-                                val duration = Toast.LENGTH_SHORT
-                                val toast =
-                                    Toast.makeText(applicationContext, text, duration)
-                                toast.show()
-                            } else {
+
                                 val emailAmigo = binding.correo.text.toString()
                                 if (usuario.delAmigo(nombreAmigo, emailAmigo)) {
                                     db.collection("Usuarios").document(usuario.getCorreo())
@@ -219,7 +213,7 @@ class Amigos : AppCompatActivity(), OnAmigoClickListener {
                                     toast.show()
                                 }
 
-                            }
+
                         } else {
                             val text = "No existe nuestro usuario"
                             val duration = Toast.LENGTH_SHORT
@@ -381,16 +375,16 @@ class Amigos : AppCompatActivity(), OnAmigoClickListener {
         ChatId = chatId
         var chat = Chats(
             id = chatId,
-            name = "Chat de $nombreUsuario y $nombreAmigo",
-            users = users
+            nombre = "Chat de $nombreUsuario y $nombreAmigo",
+            usuarios = users
         )
 
         db.collection("chats").document(chatId).set(chat)
-        chat.name = "Chat con $nombreAmigo"
+        chat.nombre = "Chat con $nombreAmigo"
         if (emailUsuario != null) {
             db.collection("Usuarios").document(emailUsuario).collection("chats").document(chatId).set(chat)
         }
-        chat.name = "Chat con $nombreUsuario"
+        chat.nombre = "Chat con $nombreUsuario"
         db.collection("Usuarios").document(emailAmigo).collection("chats").document(chatId).set(chat)
 
     }

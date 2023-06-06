@@ -137,11 +137,11 @@ class Amigo(private var nombre: String) : Serializable {
 
 data class Chats(
     var id: String = "",
-    var name: String = "",
-    var users: List<String> = emptyList()
+    var nombre: String = "",
+    var usuarios: List<String> = emptyList()
 )
-data class Message (
-    var message: String = "",
+data class Mensaje (
+    var mensaje: String = "",
     var from: String = "",
-    var dob: Date = Date()
+    var fecha: Date = Date()
 )
