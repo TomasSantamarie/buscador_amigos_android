@@ -44,38 +44,39 @@ class Chat : AppCompatActivity() {
 
     private fun initViews(){
         binding.mensajesRecylerView.layoutManager = LinearLayoutManager(this)
-        binding.mensajesRecylerView.adapter = MessageAdapter(usuario)
+        binding.mensajesRecylerView.adapter = MensajeAdapter(usuario)
 
 
         val chatRef = db.collection("chats").document(chatId)
         chatRef.collection("mensajes").orderBy("fecha", Query.Direction.ASCENDING)
             .get()
-            .addOnSuccessListener { messages ->
-                val listMessages = messages.toObjects(Mensaje::class.java)
-                (binding.mensajesRecylerView.adapter as MessageAdapter).setData(listMessages)
+            .addOnSuccessListener { mensajes ->
+                val listMessages = mensajes.toObjects(Mensaje::class.java)
+                (binding.mensajesRecylerView.adapter as MensajeAdapter).setData(listMessages)
             }
 
         chatRef.collection("mensajes").orderBy("fecha", Query.Direction.ASCENDING)
-            .addSnapshotListener { messages, error ->
+            .addSnapshotListener { mensajes, error ->
                 if(error == null){
-                    messages?.let {
+                    mensajes?.let {
                         val listMessages = it.toObjects(Mensaje::class.java)
-                        (binding.mensajesRecylerView.adapter as MessageAdapter).setData(listMessages)
+                        (binding.mensajesRecylerView.adapter as MensajeAdapter).setData(listMessages)
                     }
                 }
             }
     }
 
     private fun enviarMensaje(){
-        val mensaje = Mensaje(
-            mensaje = binding.mensajeTextField.text.toString(),
-            from = usuario
-        )
+        if (binding.mensajeTextField.text.toString().isNotEmpty()){
+            val mensaje = Mensaje(
+                mensaje = binding.mensajeTextField.text.toString(),
+                from = usuario
+            )
 
-        db.collection("chats").document(chatId).collection("mensajes").document().set(mensaje)
+            db.collection("chats").document(chatId).collection("mensajes").document().set(mensaje)
 
-        binding.mensajeTextField.setText("")
-
+            binding.mensajeTextField.setText("")
+        }
 
     }
 }
