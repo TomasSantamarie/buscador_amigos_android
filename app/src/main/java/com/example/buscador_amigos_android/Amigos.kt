@@ -63,7 +63,9 @@ class Amigos : AppCompatActivity(), OnAmigoClickListener {
                     eliminarAmigo(emailUsuario)
                 else {
                     if (binding.anadir.text.toString()
-                            .equals("ACTUALIZAR") && binding.nuevo.text.toString().isNotEmpty()
+                            .equals("ACTUALIZAR") && binding.nuevo.text.toString()
+                            .isNotEmpty() && binding.anadir.text.toString()
+                            .equals("ACTUALIZAR") && binding.nuevo.text.toString().isNotBlank()
                     )
                         editarAmigo(
                             emailUsuario,
@@ -180,38 +182,38 @@ class Amigos : AppCompatActivity(), OnAmigoClickListener {
 
                         if (usuario != null) {
 
-                                val emailAmigo = binding.correo.text.toString()
-                                if (usuario.delAmigo(nombreAmigo, emailAmigo)) {
-                                    db.collection("Usuarios").document(usuario.getCorreo())
-                                        .set(usuario)
-                                    val text = "Eliminado de tu lista de amigos"
-                                    val duration = Toast.LENGTH_SHORT
-                                    val toast =
-                                        Toast.makeText(applicationContext, text, duration)
-                                    toast.show()
+                            val emailAmigo = binding.correo.text.toString()
+                            if (usuario.delAmigo(nombreAmigo, emailAmigo)) {
+                                db.collection("Usuarios").document(usuario.getCorreo())
+                                    .set(usuario)
+                                val text = "Eliminado de tu lista de amigos"
+                                val duration = Toast.LENGTH_SHORT
+                                val toast =
+                                    Toast.makeText(applicationContext, text, duration)
+                                toast.show()
 
-                                    Log.v("emailAmigo", emailAmigo)
-                                    if (emailAmigo != "error") {
-                                        deleteAmigo(
-                                            emailAmigo,
-                                            usuario.getNombre(),
-                                            usuario.getCorreo()
-                                        )
-                                        refrescar(emailUsuario)
-                                    } else {
-                                        val text = "Algo falla"
-                                        val duration = Toast.LENGTH_SHORT
-                                        val toast =
-                                            Toast.makeText(applicationContext, text, duration)
-                                        toast.show()
-                                    }
+                                Log.v("emailAmigo", emailAmigo)
+                                if (emailAmigo != "error") {
+                                    deleteAmigo(
+                                        emailAmigo,
+                                        usuario.getNombre(),
+                                        usuario.getCorreo()
+                                    )
+                                    refrescar(emailUsuario)
                                 } else {
-                                    val text = "No lo tienes como amigo"
+                                    val text = "Algo falla"
                                     val duration = Toast.LENGTH_SHORT
                                     val toast =
                                         Toast.makeText(applicationContext, text, duration)
                                     toast.show()
                                 }
+                            } else {
+                                val text = "No lo tienes como amigo"
+                                val duration = Toast.LENGTH_SHORT
+                                val toast =
+                                    Toast.makeText(applicationContext, text, duration)
+                                toast.show()
+                            }
 
 
                         } else {
@@ -298,7 +300,12 @@ class Amigos : AppCompatActivity(), OnAmigoClickListener {
                                             Toast.makeText(applicationContext, text, duration)
                                         toast.show()
                                     } else {
-                                        crearChat(nombreUsuario,usuario.getNombre(),emailUsuario,emailAmigo)
+                                        crearChat(
+                                            nombreUsuario,
+                                            usuario.getNombre(),
+                                            emailUsuario,
+                                            emailAmigo
+                                        )
                                         amigo.setChatId(ChatId)
                                         usuario.getAmigos().add(amigo)
                                         db.collection("Usuarios").document(usuario.getCorreo())
@@ -382,10 +389,12 @@ class Amigos : AppCompatActivity(), OnAmigoClickListener {
         db.collection("chats").document(chatId).set(chat)
         chat.nombre = "Chat con $nombreAmigo"
         if (emailUsuario != null) {
-            db.collection("Usuarios").document(emailUsuario).collection("chats").document(chatId).set(chat)
+            db.collection("Usuarios").document(emailUsuario).collection("chats").document(chatId)
+                .set(chat)
         }
         chat.nombre = "Chat con $nombreUsuario"
-        db.collection("Usuarios").document(emailAmigo).collection("chats").document(chatId).set(chat)
+        db.collection("Usuarios").document(emailAmigo).collection("chats").document(chatId)
+            .set(chat)
 
     }
 }

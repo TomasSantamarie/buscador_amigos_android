@@ -67,7 +67,7 @@ class Chat : AppCompatActivity() {
     }
 
     private fun enviarMensaje(){
-        if (binding.mensajeTextField.text.toString().isNotEmpty()){
+        if (binding.mensajeTextField.text.toString().isNotEmpty() && binding.mensajeTextField.text.toString().isNotBlank()){
             val mensaje = Mensaje(
                 mensaje = binding.mensajeTextField.text.toString(),
                 from = usuario
